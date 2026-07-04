@@ -16,7 +16,8 @@ typedef EventNote = {
 	strumTime:Float,
 	event:String,
 	value1:String,
-	value2:String
+	value2:String,
+	?params:Array<Dynamic>
 }
 
 typedef NoteSplashData = {
@@ -53,6 +54,7 @@ class Note extends FlxSprite
 
 	public var strumTime:Float = 0;
 	public var noteData:Int = 0;
+	public var maniaKeyCount:Int = 4;
 
 	public var mustPress:Bool = false;
 	public var canBeHit:Bool = false;
@@ -95,12 +97,9 @@ class Note extends FlxSprite
 
 	public static var SUSTAIN_SIZE:Int = 44;
 	public static var swagWidth:Float = 160 * 0.7;
-	public static var colArray:Array<String> = ['purple', 'blue', 'green', 'red', 'space'];
-	public static var defaultNoteSkin(get, never):String;
-	private static function get_defaultNoteSkin():String {
-		if (Mods.isCodenameMod()) return 'game/notes/default';
-		return 'noteSkins/NOTE_assets';
-	}
+	public static var colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
+	public static var threeDColArray:Array<String> = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'alt A'];
+	public static var defaultNoteSkin(default, never):String = 'noteSkins/NOTE_assets';
 
 	public var noteSplashData:NoteSplashData = {
 		disabled: false,
@@ -132,6 +131,7 @@ class Note extends FlxSprite
 	public var ratingDisabled:Bool = false;
 
 	public var texture(default, set):String = null;
+	public var loadedTexture(default, null):String = null;
 
 	public var noAnimation:Bool = false;
 	public var noMissAnimation:Bool = false;
@@ -177,6 +177,13 @@ class Note extends FlxSprite
 
 	public function defaultRGB()
 	{
+		if(is3DNoteTexture(loadedTexture) || (PlayState.SONG != null && is3DNoteTexture(PlayState.SONG.arrowSkin)))
+		{
+			rgbShader.enabled = true;
+			noteSplashData.useRGBShader = false;
+			return;
+		}
+
 		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[noteData];
 		if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[noteData];
 
@@ -224,8 +231,6 @@ class Note extends FlxSprite
 					hitsoundChartEditor = false;
 				case 'Alt Animation':
 					animSuffix = '-alt';
-				case 'Spam Animation':
-					animSuffix = 'Spam';
 				case 'No Animation':
 					noAnimation = true;
 					noMissAnimation = true;
@@ -239,7 +244,7 @@ class Note extends FlxSprite
 		return value;
 	}
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false, ?createdFrom:Dynamic = null)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?inEditor:Bool = false, ?createdFrom:Dynamic = null, ?keyCount:Int = 4)
 	{
 		super();
 
@@ -263,6 +268,7 @@ class Note extends FlxSprite
 		if(!inEditor) this.strumTime += ClientPrefs.data.noteOffset;
 
 		this.noteData = noteData;
+		this.maniaKeyCount = keyCount;
 
 		if(noteData > -1)
 		{
@@ -271,10 +277,13 @@ class Note extends FlxSprite
 			texture = '';
 
 			x += swagWidth * (noteData);
-			if(!isSustainNote && noteData < colArray.length) { //Doing this 'if' check to fix the warnings on Senpai songs
+			var noteProfile:Array<String> = getProfileForTexture(loadedTexture, maniaKeyCount);
+			if(!isSustainNote && noteData < noteProfile.length) { //Doing this 'if' check to fix the warnings on Senpai songs
 				var animToPlay:String = '';
-				animToPlay = colArray[noteData % colArray.length];
-				animation.play(animToPlay + 'Scroll');
+				animToPlay = noteProfile[noteData % noteProfile.length];
+				var scrollAnim:String = animToPlay + 'Scroll';
+				if(animation.exists(scrollAnim))
+					animation.play(scrollAnim);
 			}
 		}
 
@@ -285,15 +294,18 @@ class Note extends FlxSprite
 
 		if (isSustainNote && prevNote != null)
 		{
-			alpha = 0.6;
-			multAlpha = 0.6;
+			alpha = 1;
+			multAlpha = 1;
 			hitsoundDisabled = true;
 			if(ClientPrefs.data.downScroll) flipY = true;
 
 			offsetX += width / 2;
 			copyAngle = false;
 
-			animation.play(colArray[noteData % colArray.length] + 'holdend');
+			var sustainProfile:Array<String> = getProfileForTexture(loadedTexture, maniaKeyCount);
+			var tailAnim:String = sustainProfile[noteData % sustainProfile.length] + 'tail';
+			if(animation.exists(tailAnim))
+				animation.play(tailAnim);
 
 			updateHitbox();
 
@@ -304,7 +316,10 @@ class Note extends FlxSprite
 
 			if (prevNote.isSustainNote)
 			{
-				prevNote.animation.play(colArray[prevNote.noteData % colArray.length] + 'hold');
+				var prevProfile:Array<String> = getProfileForTexture(prevNote.loadedTexture, prevNote.maniaKeyCount);
+				var holdAnim:String = prevProfile[prevNote.noteData % prevProfile.length] + 'hold';
+				if(prevNote.animation.exists(holdAnim))
+					prevNote.animation.play(holdAnim);
 
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.05;
 				if(createdFrom != null && createdFrom.songSpeed != null) prevNote.scale.y *= createdFrom.songSpeed;
@@ -337,7 +352,7 @@ class Note extends FlxSprite
 		if(globalRgbShaders[noteData] == null)
 		{
 			var newRGB:RGBPalette = new RGBPalette();
-			var arr:Array<FlxColor> = (!PlayState.isPixelStage) ? ClientPrefs.data.arrowRGB[noteData] : ClientPrefs.data.arrowRGBPixel[noteData];
+			var arr:Array<FlxColor> = (!PlayState.isPixelStage) ? ClientPrefs.data.arrowRGB[noteData % ClientPrefs.data.arrowRGB.length] : ClientPrefs.data.arrowRGBPixel[noteData % ClientPrefs.data.arrowRGBPixel.length];
 			
 			if (arr != null && noteData > -1 && noteData <= arr.length)
 			{
@@ -390,6 +405,12 @@ class Note extends FlxSprite
 			_lastValidChecked = customSkin;
 		}
 		else skinPostfix = '';
+		loadedTexture = skin;
+		if(is3DNoteTexture(loadedTexture))
+		{
+			rgbShader.enabled = true;
+			noteSplashData.useRGBShader = false;
+		}
 
 		if(PlayState.isPixelStage) {
 			if(isSustainNote) {
@@ -412,6 +433,8 @@ class Note extends FlxSprite
 		} else {
 			frames = Paths.getSparrowAtlas(skin);
 			loadNoteAnims();
+			if(is3DNoteTexture(loadedTexture))
+				antialiasing = false;
 			if(!isSustainNote)
 			{
 				centerOffsets();
@@ -421,10 +444,12 @@ class Note extends FlxSprite
 
 		if(isSustainNote) {
 			scale.y = lastScaleY;
+			pixelPerfectRender = true;
+			antialiasing = false;
 		}
 		updateHitbox();
 
-		if(animName != null)
+		if(animName != null && animation.exists(animName))
 			animation.play(animName, true);
 	}
 
@@ -437,19 +462,161 @@ class Note extends FlxSprite
 	}
 
 	function loadNoteAnims() {
-		if (colArray[noteData] == null)
+		var profile:Array<String> = getProfileForTexture(loadedTexture, maniaKeyCount);
+		if (profile[noteData] == null)
 			return;
 
 		if (isSustainNote)
 		{
 			attemptToAddAnimationByPrefix('purpleholdend', 'pruple end hold', 24, true); // this fixes some retarded typo from the original note .FLA
-			animation.addByPrefix(colArray[noteData] + 'holdend', colArray[noteData] + ' hold end', 24, true);
-			animation.addByPrefix(colArray[noteData] + 'hold', colArray[noteData] + ' hold piece', 24, true);
+			var usesLetterAtlas:Bool = isLetterProfile(profile[noteData]);
+			if (usesLetterAtlas) {
+				if(!addFirstMatchingAnimation(profile[noteData] + 'tail', [
+					profile[noteData] + ' hold end0000',
+					profile[noteData] + ' hold end',
+					profile[noteData] + ' tail0000',
+					profile[noteData] + ' tail'
+				])) return;
+				if(!addFirstMatchingAnimation(profile[noteData] + 'hold', [
+					profile[noteData] + ' hold piece0000',
+					profile[noteData] + ' hold piece',
+					profile[noteData] + ' hold0000',
+					profile[noteData] + ' hold'
+				])) return;
+			}
+			else {
+				if(!addFirstMatchingAnimation(profile[noteData] + 'tail', [
+					profile[noteData] + ' hold end0000',
+					profile[noteData] + ' hold end',
+					profile[noteData] + ' tail0000',
+					profile[noteData] + ' tail',
+					'pruple end hold'
+				])) return;
+				if(!addFirstMatchingAnimation(profile[noteData] + 'hold', [
+					profile[noteData] + ' hold piece0000',
+					profile[noteData] + ' hold piece',
+					profile[noteData] + ' hold0000',
+					profile[noteData] + ' hold'
+				])) return;
+			}
 		}
-		else animation.addByPrefix(colArray[noteData] + 'Scroll', colArray[noteData] + '0');
+		else animation.addByPrefix(profile[noteData] + 'Scroll', profile[noteData] + '0');
 
-		setGraphicSize(Std.int(width * 0.7));
+		setGraphicSize(Std.int(width * getKeyScale(maniaKeyCount)));
 		updateHitbox();
+	}
+
+	public static function is3DNoteTexture(texture:String):Bool
+		return texture != null && texture.toLowerCase().contains('3d');
+
+	public static function getProfileForTexture(texture:String, ?keyCount:Int = 4):Array<String>
+	{
+		if(!is3DNoteTexture(texture))
+			return get2DProfile(keyCount);
+
+		return get3DProfile(keyCount);
+	}
+
+	public static function get2DProfile(?keyCount:Int = 4):Array<String>
+	{
+		return switch(keyCount)
+		{
+			case 1: ['E'];
+			case 2: ['A', 'D'];
+			case 3: ['A', 'E', 'D'];
+			case 4: ['purple', 'blue', 'green', 'red'];
+			case 5: ['A', 'B', 'E', 'C', 'D'];
+			case 6: ['A', 'C', 'D', 'F', 'B', 'I'];
+			case 7: ['A', 'C', 'D', 'E', 'F', 'B', 'I'];
+			case 8: ['A', 'B', 'C', 'D', 'F', 'G', 'H', 'I'];
+			case 9: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+			default: ['purple', 'blue', 'green', 'red'];
+		}
+	}
+
+	static function isLetterProfile(prefix:String):Bool
+	{
+		if(prefix == null || prefix.length == 0)
+			return false;
+
+		return prefix.startsWith('alt ') || ~/^[A-I]$/.match(prefix);
+	}
+
+	public static function getLaneColorIndex(texture:String, ?keyCount:Int = 4, ?lane:Int = 0):Int
+	{
+		var profile:Array<String> = getProfileForTexture(texture, keyCount);
+		if(profile == null || profile.length == 0)
+			return Std.int(Math.abs(lane)) % 4;
+
+		var key:String = profile[Std.int(Math.abs(lane)) % profile.length];
+		return switch(key)
+		{
+			case 'A' | 'F' | 'alt A' | 'purple': 0;
+			case 'B' | 'G' | 'blue': 1;
+			case 'C' | 'H' | 'green': 2;
+			case 'D' | 'I' | 'red': 3;
+			case 'E': 0;
+			default: Std.int(Math.abs(lane)) % 4;
+		}
+	}
+
+	public static function get3DProfile(?keyCount:Int = 4):Array<String>
+	{
+		return switch(keyCount)
+		{
+			case 1: threeDProfile([4]);
+			case 2: threeDProfile([0, 3]);
+			case 3: threeDProfile([0, 4, 3]);
+			case 4: threeDProfile([0, 1, 2, 3]);
+			case 5: threeDProfile([0, 1, 4, 2, 3]);
+			case 6: threeDProfile([9, 2, 3, 5, 1, 8]);
+			case 7: threeDProfile([0, 2, 3, 4, 5, 1, 8]);
+			case 8: threeDProfile([0, 1, 2, 3, 5, 6, 7, 8]);
+			case 9: threeDProfile([0, 1, 2, 3, 4, 5, 6, 7, 8]);
+			default: threeDProfile([0, 1, 2, 3]);
+		}
+	}
+
+	static function threeDProfile(indices:Array<Int>):Array<String>
+	{
+		var profile:Array<String> = [];
+		for(index in indices)
+			profile.push(threeDColArray[index]);
+		return profile;
+	}
+
+	public static function getSingAnimations(?keyCount:Int = 4):Array<String>
+	{
+		return switch(keyCount)
+		{
+			case 1: ['singUP'];
+			case 2: ['singLEFT', 'singRIGHT'];
+			case 3: ['singLEFT', 'singUP', 'singRIGHT'];
+			case 4: ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
+			case 5: ['singLEFT', 'singDOWN', 'singSPACE', 'singUP', 'singRIGHT'];
+			case 6: ['singLEFT-alt', 'singUP', 'singRIGHT', 'singLEFT', 'singDOWN', 'singRIGHT-alt'];
+			case 7: ['singLEFT', 'singUP', 'singRIGHT', 'singUP', 'singLEFT', 'singDOWN', 'singRIGHT'];
+			case 8: ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT', 'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
+			case 9: ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT', 'singUP', 'singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
+			default: ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
+		}
+	}
+
+	public static function getKeyScale(?keyCount:Int = 4):Float
+	{
+		return switch(keyCount)
+		{
+			case 1: 0.7;
+			case 2: 0.7;
+			case 3: 0.7;
+			case 4: 0.7;
+			case 5: 0.65;
+			case 6: 0.6;
+			case 7: 0.55;
+			case 8: 0.5;
+			case 9: 0.46;
+			default: 0.7;
+		}
 	}
 
 	function loadPixelNoteAnims() {
@@ -458,19 +625,28 @@ class Note extends FlxSprite
 
 		if(isSustainNote)
 		{
-			animation.add(colArray[noteData] + 'holdend', [noteData + 4], 24, true);
+			animation.add(colArray[noteData] + 'tail', [noteData + 4], 24, true);
 			animation.add(colArray[noteData] + 'hold', [noteData], 24, true);
 		} else animation.add(colArray[noteData] + 'Scroll', [noteData + 4], 24, true);
 	}
 
-	function attemptToAddAnimationByPrefix(name:String, prefix:String, framerate:Float = 24, doLoop:Bool = true)
+	function addFirstMatchingAnimation(name:String, prefixes:Array<String>, framerate:Float = 24, doLoop:Bool = true):Bool
+	{
+		for(prefix in prefixes)
+			if(attemptToAddAnimationByPrefix(name, prefix, framerate, doLoop))
+				return true;
+		return false;
+	}
+
+	function attemptToAddAnimationByPrefix(name:String, prefix:String, framerate:Float = 24, doLoop:Bool = true):Bool
 	{
 		var animFrames = [];
 		@:privateAccess
 		animation.findByPrefix(animFrames, prefix); // adds valid frames to animFrames
-		if(animFrames.length < 1) return;
+		if(animFrames.length < 1) return false;
 
 		animation.addByPrefix(name, prefix, framerate, doLoop);
+		return true;
 	}
 
 	override function update(elapsed:Float)
@@ -541,6 +717,11 @@ class Note extends FlxSprite
 				}
 				y -= (frameHeight * scale.y) - (Note.swagWidth / 2);
 			}
+
+			// Sustain bodies are stacked from separate sprites. Keeping their render position
+			// on whole pixels prevents the thin seams caused by fractional overlap at segment joins.
+			if(isSustainNote)
+				y = Math.round(y);
 		}
 	}
 

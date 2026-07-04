@@ -10,6 +10,7 @@ class StrumNote extends FlxSprite
 	public var rgbShader:RGBShaderReference;
 	public var resetAnim:Float = 0;
 	private var noteData:Int = 0;
+	public var keyCount:Int = 4;
 	public var direction:Float = 90;
 	public var downScroll:Bool = false;
 	public var sustainReduce:Bool = true;
@@ -25,15 +26,15 @@ class StrumNote extends FlxSprite
 	}
 
 	public var useRGBShader:Bool = true;
-	public function new(x:Float, y:Float, leData:Int, player:Int) {
+	public function new(x:Float, y:Float, leData:Int, player:Int, ?keyCount:Int = 4) {
 		animation = new PsychAnimationController(this);
 
 		rgbShader = new RGBShaderReference(this, Note.initializeGlobalRGBShader(leData));
 		rgbShader.enabled = false;
 		if(PlayState.SONG != null && PlayState.SONG.disableNoteRGB) useRGBShader = false;
 		
-		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[leData];
-		if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[leData];
+		var arr:Array<FlxColor> = ClientPrefs.data.arrowRGB[leData % ClientPrefs.data.arrowRGB.length];
+		if(PlayState.isPixelStage) arr = ClientPrefs.data.arrowRGBPixel[leData % ClientPrefs.data.arrowRGBPixel.length];
 		
 		if(leData <= arr.length)
 		{
@@ -46,6 +47,7 @@ class StrumNote extends FlxSprite
 		}
 
 		noteData = leData;
+		this.keyCount = keyCount;
 		this.player = player;
 		this.noteData = leData;
 		this.ID = noteData;
@@ -109,33 +111,63 @@ class StrumNote extends FlxSprite
 			animation.addByPrefix('blue', 'arrowDOWN');
 			animation.addByPrefix('purple', 'arrowLEFT');
 			animation.addByPrefix('red', 'arrowRIGHT');
-			animation.addByPrefix('space', 'arrowSPACE');
 
-			antialiasing = ClientPrefs.data.antialiasing;
-			setGraphicSize(Std.int(width * 0.7));
-
-			switch (Math.abs(noteData) % 5)
+			antialiasing = Note.is3DNoteTexture(texture) ? false : ClientPrefs.data.antialiasing;
+			if(Note.is3DNoteTexture(texture))
 			{
-				case 0:
-					animation.addByPrefix('static', 'arrowLEFT');
-					animation.addByPrefix('pressed', 'left press', 24, false);
-					animation.addByPrefix('confirm', 'left confirm', 24, false);
-				case 1:
-					animation.addByPrefix('static', 'arrowDOWN');
-					animation.addByPrefix('pressed', 'down press', 24, false);
-					animation.addByPrefix('confirm', 'down confirm', 24, false);
-				case 2:
-					animation.addByPrefix('static', 'arrowUP');
-					animation.addByPrefix('pressed', 'up press', 24, false);
-					animation.addByPrefix('confirm', 'up confirm', 24, false);
-				case 3:
-					animation.addByPrefix('static', 'arrowRIGHT');
-					animation.addByPrefix('pressed', 'right press', 24, false);
-					animation.addByPrefix('confirm', 'right confirm', 24, false);
-				case 4:
-					animation.addByPrefix('static', 'arrowSPACE');
-					animation.addByPrefix('pressed', 'space press', 24, false);
-					animation.addByPrefix('confirm', 'space confirm', 24, false);
+				useRGBShader = true;
+				rgbShader.enabled = false;
+			}
+			setGraphicSize(Std.int(width * Note.getKeyScale(keyCount)));
+
+			if(Note.is3DNoteTexture(texture))
+			{
+				var letters:Array<String> = Note.getProfileForTexture(texture, keyCount);
+				var key:String = letters[Std.int(Math.abs(noteData)) % letters.length];
+				var staticPrefix:String = switch(key)
+				{
+					case 'A' | 'F' | 'purple': 'arrowLEFT';
+					case 'B' | 'G' | 'blue': 'arrowDOWN';
+					case 'C' | 'H' | 'green': 'arrowUP';
+					case 'D' | 'red': 'arrowRIGHT';
+					case 'E': 'arrowSPACE';
+					case 'I': 'alt arrowright';
+					case 'alt A': 'alt arrowLEFT';
+					default: 'arrowRIGHT';
+				}
+				animation.addByPrefix('static', staticPrefix);
+				animation.addByPrefix('pressed', key + ' press', 24, false);
+				animation.addByPrefix('confirm', key + ' confirm', 24, false);
+			}
+			else
+			{
+				var profile:Array<String> = Note.get2DProfile(keyCount);
+				var key:String = profile[Std.int(Math.abs(noteData)) % profile.length];
+				var staticPrefix:String = switch(key)
+				{
+					case 'A' | 'F' | 'purple': 'arrowLEFT';
+					case 'B' | 'G' | 'blue': 'arrowDOWN';
+					case 'C' | 'H' | 'green': 'arrowUP';
+					case 'D' | 'red': 'arrowRIGHT';
+					case 'E': 'arrowSPACE';
+					case 'I': 'alt arrowright';
+					case 'alt A': 'alt arrowLEFT';
+					default: 'arrowRIGHT';
+				}
+				var animPrefix:String = switch(key)
+				{
+					case 'A' | 'F' | 'purple': 'left';
+					case 'B' | 'G' | 'blue': 'down';
+					case 'C' | 'H' | 'green': 'up';
+					case 'D' | 'red': 'right';
+					case 'E': 'space';
+					case 'I': 'alt right';
+					case 'alt A': 'alt left';
+					default: 'right';
+				}
+				animation.addByPrefix('static', staticPrefix);
+				animation.addByPrefix('pressed', animPrefix + ' press', 24, false);
+				animation.addByPrefix('confirm', animPrefix + ' confirm', 24, false);
 			}
 		}
 		updateHitbox();
@@ -148,9 +180,44 @@ class StrumNote extends FlxSprite
 
 	public function playerPosition()
 	{
-		x += Note.swagWidth * noteData;
+		var gap:Float = switch(keyCount)
+		{
+			case 1: width;
+			case 2: width + 30;
+			case 3: width + 10;
+			case 4: Note.swagWidth;
+			case 5: width - 10;
+			case 6: width - 20;
+			case 7: width - 32;
+			case 8: width - 40;
+			case 9: width - 45;
+			default: Note.swagWidth;
+		}
+		var xOffset:Float = switch(keyCount)
+		{
+			case 1: -100;
+			case 2: -75;
+			case 3: -50;
+			case 4: 0;
+			case 5: 35;
+			case 6: 45;
+			case 7: 52;
+			case 8: 57;
+			case 9: 65;
+			default: 0;
+		}
+		var yOffset:Float = switch(keyCount)
+		{
+			case 5: 10;
+			case 6 | 7: 25;
+			case 8 | 9: 40;
+			default: 0;
+		}
+		x += gap * noteData;
 		x += 50;
 		x += ((FlxG.width / 2) * player);
+		x -= xOffset;
+		y += yOffset;
 	}
 
 	override function update(elapsed:Float) {
@@ -171,6 +238,8 @@ class StrumNote extends FlxSprite
 			centerOffsets();
 			centerOrigin();
 		}
-		if(useRGBShader) rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static');
+		if(useRGBShader && !Note.is3DNoteTexture(texture))
+			rgbShader.enabled = (animation.curAnim != null && animation.curAnim.name != 'static');
+		else rgbShader.enabled = false;
 	}
 }
