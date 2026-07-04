@@ -26,10 +26,12 @@ local function updateStrums()
         local texture
 
         if isOpponent then
-            texture = dad3D and '3d' or ''
+            texture = dad3D and '3d' or '' 
+            setPropertyFromGroup('strumLineNotes', i, 'rgbShader.enabled', false)
         else
             texture = bf3D and '3d2' or ''
             setPropertyFromGroup('strumLineNotes', i, 'antialiasing', true)
+            setPropertyFromGroup('strumLineNotes', i, 'rgbShader.enabled', false)
         end
 
         local currentTexture = getPropertyFromGroup('strumLineNotes', i, 'texture')
@@ -37,7 +39,8 @@ local function updateStrums()
         if currentTexture ~= texture then
             setPropertyFromGroup('strumLineNotes', i, 'texture', texture)
         end
-    end
+    end 
+
 end
 
 local function updateUnspawnNotes()
@@ -52,6 +55,7 @@ local function updateUnspawnNotes()
                 bf3D and '3d2' or ''
             )
             setPropertyFromGroup('unspawnNotes', i, 'antialiasing', true)
+            setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false)
         else
             setPropertyFromGroup(
                 'unspawnNotes',
@@ -59,8 +63,10 @@ local function updateUnspawnNotes()
                 'texture',
                 dad3D and '3d' or ''
             )
+            setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false)
         end
     end
+
 end
 
 local function updateStrumPositions()
