@@ -1,0 +1,3 @@
+@dialogue pos="L" portrait="invi" text="OH I ALMOST FORGOT" dbox="scary"
+@dialogue pos="L" portrait="invi" text="You already collected one of my pieces" dbox="happy"
+@dialogue pos="L" portrait="invi" text="Can you hand it over to me?" dbox="happy"	

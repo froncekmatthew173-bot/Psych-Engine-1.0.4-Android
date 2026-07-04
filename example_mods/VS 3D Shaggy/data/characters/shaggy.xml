@@ -1,0 +1,17 @@
+<!DOCTYPE codename-engine-character>
+<character sprite="shaggy" scale="1.4" antialiasing="false" camx="500" camy="300" icon="shaggy" color="#2B5648">
+	<anim name="idle" anim="idle" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="down" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="right" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="left" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="up" x="0" y="0" fps="24" loop="false"/>
+	<anim name="sup" anim="sup" x="0" y="0" fps="24" loop="false"/>
+	<anim name="intro" anim="intro" x="0" y="0" fps="24" loop="false"/>
+	<anim name="adown" anim="adown" x="0" y="0" fps="24" loop="false"/>
+	<anim name="aleft" anim="aleft" x="0" y="0" fps="24" loop="false"/>
+	<anim name="aidle" anim="aidle" x="0" y="0" fps="24" loop="false"/>
+	<anim name="sleft" anim="sleft" x="0" y="0" fps="24" loop="false"/>
+	<anim name="sdown" anim="sdown" x="0" y="0" fps="24" loop="false"/>
+	<anim name="aright" anim="aright" x="0" y="0" fps="24" loop="false"/>
+	<anim name="sright" anim="sright" x="0" y="0" fps="24" loop="false"/>
+</character>

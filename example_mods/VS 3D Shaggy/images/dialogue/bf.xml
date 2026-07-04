@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="god_bg.png">
+	<!-- Created with Adobe Animate version 20.0.0.17400 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="normal0000" x="0" y="0" width="430" height="320"/>
+	<SubTexture name="happy0000" x="430" y="0" width="430" height="320"/>
+
+	<SubTexture name="scared0000" x="0" y="320" width="430" height="320"/>
+	<SubTexture name="miss0000" x="430" y="320" width="430" height="320"/>
+</TextureAtlas>

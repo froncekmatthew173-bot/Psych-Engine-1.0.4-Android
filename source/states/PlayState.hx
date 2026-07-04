@@ -228,7 +228,7 @@ class PlayState extends MusicBeatState
 
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
-	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
+	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT', 'singSPACE'];
 
 	public var inCutscene:Bool = false;
 	public var skipCountdown:Bool = false;
@@ -465,6 +465,39 @@ class PlayState extends MusicBeatState
 					initHScript(folder + file);
 				#end
 			}
+
+		// Load Codename Engine data/scripts/ folder
+		for (folder in Mods.directoriesWithFile(Paths.getSharedPath(), 'data/scripts/'))
+			#if linux
+			for (file in CoolUtil.sortAlphabetically(Paths.readDirectory(folder)))
+			#else
+			for (file in Paths.readDirectory(folder))
+			#end
+			{
+				#if LUA_ALLOWED
+				if(file.toLowerCase().endsWith('.lua'))
+					new FunkinLua(folder + file);
+				#end
+
+				#if HSCRIPT_ALLOWED
+				if(file.toLowerCase().endsWith('.hx'))
+					initHScript(folder + file);
+				#end
+			}
+
+		// Load Codename Engine data/notes/ folder (custom note types)
+		for (folder in Mods.directoriesWithFile(Paths.getSharedPath(), 'data/notes/'))
+			#if linux
+			for (file in CoolUtil.sortAlphabetically(Paths.readDirectory(folder)))
+			#else
+			for (file in Paths.readDirectory(folder))
+			#end
+			{
+				#if HSCRIPT_ALLOWED
+				if(file.toLowerCase().endsWith('.hx'))
+					initHScript(folder + file);
+				#end
+			}
 		#end
 			
 		var camPos:FlxPoint = FlxPoint.get(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
@@ -606,6 +639,27 @@ class PlayState extends MusicBeatState
 		noteTypes = null;
 		eventsPushed = null;
 
+		// Load Codename Engine custom events from data/events/
+		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
+		for (folder in Mods.directoriesWithFile(Paths.getSharedPath(), 'data/events/'))
+			#if linux
+			for (file in CoolUtil.sortAlphabetically(Paths.readDirectory(folder)))
+			#else
+			for (file in Paths.readDirectory(folder))
+			#end
+			{
+				#if LUA_ALLOWED
+				if(file.toLowerCase().endsWith('.lua'))
+					new FunkinLua(folder + file);
+				#end
+
+				#if HSCRIPT_ALLOWED
+				if(file.toLowerCase().endsWith('.hx'))
+					initHScript(folder + file);
+				#end
+			}
+		#end
+
 		// SONG SPECIFIC SCRIPTS
 		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
 		for (folder in Mods.directoriesWithFile(Paths.getSharedPath(), 'data/$songName/'))
@@ -625,6 +679,39 @@ class PlayState extends MusicBeatState
 					initHScript(folder + file);
 				#end
 			}
+
+		// Load Codename Engine song-specific scripts from songs/<name>/scripts/
+		#if MODS_ALLOWED
+		var codenameSongScriptsPath:String = Paths.mods(Mods.currentModDirectory + '/songs/$songName/scripts/');
+		if(FileSystem.exists(codenameSongScriptsPath))
+		{
+			for (file in Paths.readDirectory(codenameSongScriptsPath))
+			{
+				#if HSCRIPT_ALLOWED
+				if(file.toLowerCase().endsWith('.hx'))
+					initHScript(codenameSongScriptsPath + file);
+				#end
+			}
+		}
+
+		// Load Codename Engine GLOBAL scripts from songs/ root folder (applies to all songs)
+		var codenameGlobalSongsPath:String = Paths.mods(Mods.currentModDirectory + '/songs/');
+		if(FileSystem.exists(codenameGlobalSongsPath))
+		{
+			for (file in Paths.readDirectory(codenameGlobalSongsPath))
+			{
+				// Only load .hx files directly in the songs/ folder, not subfolders
+				if(file.toLowerCase().endsWith('.hx'))
+				{
+					#if HSCRIPT_ALLOWED
+					var fullPath:String = codenameGlobalSongsPath + file;
+					if(!FileSystem.isDirectory(fullPath))
+						initHScript(fullPath);
+					#end
+				}
+			}
+		}
+		#end
 		#end
 		
 		addMobileControls();
@@ -1412,8 +1499,9 @@ class PlayState extends MusicBeatState
 
 				var swagNote:Note = new Note(spawnTime, noteColumn, oldNote);
 				var isAlt: Bool = section.altAnim && !gottaHitNote;
+				var isSpam: Bool = section.spamAnim && !gottaHitNote;
 				swagNote.gfNote = (section.gfSection && gottaHitNote == section.mustHitSection);
-				swagNote.animSuffix = isAlt ? "-alt" : "";
+				swagNote.animSuffix = isSpam ? "Spam" : (isAlt ? "-alt" : "");
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = holdLength;
 				swagNote.noteType = noteType;
@@ -1656,12 +1744,17 @@ class PlayState extends MusicBeatState
 		runSongSyncThread();
 	}
 
-	override public function onFocusLost():Void
+override public function onFocusLost():Void
 	{
 		super.onFocusLost();
+		// Avoid crashing if PlayState initialization failed (iconP2 / SONG / RPC not ready)
 		if (!paused && health > 0 && autoUpdateRPC)
 		{
-			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+			var songName:String = (SONG != null) ? SONG.song : null;
+			if (songName != null && iconP2 != null)
+			{
+				DiscordClient.changePresence(detailsPausedText, songName + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+			}
 		}
 		shutdownThread = true;
 	}
@@ -3348,6 +3441,7 @@ class PlayState extends MusicBeatState
 			}
 			setOnScripts('mustHitSection', SONG.notes[curSection].mustHitSection);
 			setOnScripts('altAnim', SONG.notes[curSection].altAnim);
+			setOnScripts('spamAnim', SONG.notes[curSection].spamAnim);
 			setOnScripts('gfSection', SONG.notes[curSection].gfSection);
 		}
 		super.sectionHit();

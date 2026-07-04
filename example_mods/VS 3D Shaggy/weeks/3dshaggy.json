@@ -1,0 +1,27 @@
+{
+	"storyName": "???",
+	"difficulties": "Normal",
+	"hideFreeplay": false,
+	"weekBackground": "3d",
+	"weekBefore": "tutorial",
+	"startUnlocked": true,
+	"hideStoryMode": false,
+	"songs": [
+		[
+			"shaggy3d",
+			"shaggy-3d",
+			[
+				43,
+				86,
+				72
+			]
+		]
+	],
+	"weekCharacters": [
+		"shaggy",
+		"bf",
+		"gf"
+	],
+	"hiddenUntilUnlocked": false,
+	"weekName": ""
+}

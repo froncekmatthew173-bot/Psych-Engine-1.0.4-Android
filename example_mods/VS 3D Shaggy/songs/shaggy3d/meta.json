@@ -1,0 +1,15 @@
+{
+	"customValues": {},
+	"color": "#2B5648",
+	"opponentModeAllowed": true,
+	"icon": "shaggy-3d",
+	"difficulties": [
+		"normal"
+	],
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"displayName": "traimensional",
+	"beatsPerMeasure": 4,
+	"needsVoices": true,
+	"bpm": 194
+}

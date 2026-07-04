@@ -1,0 +1,8 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="The name's Zephyrus" dbox="normal"
+@dialogue pos="L" portrait="invi" text="But I've personally decided to call myself \n'Phantom Zephyrus' for the time being" dbox="happy"
+@dialogue pos="L" portrait="invi" text="Since, y'know, currently I don't exist" dbox="worried"
+@dialogue pos="L" portrait="invi" text="It sounds really COOL if you ask me!!" dbox="scream_flip"
+@dialogue pos="L" portrait="invi" text="..." dbox="scream_flip"
+@dialogue pos="L" portrait="invi" text="Or you can call me Zeph, like my friends do \n(I don't have friends)" dbox="normal"
+@dialogue pos="L" portrait="invi" text="Anyways what was I talking about... ?" dbox="happy"

@@ -31,6 +31,19 @@ class Mods
 		'achievements'
 	];
 
+	// Codename Engine specific folder names to ignore when scanning for mod folders
+	public static final codenameIgnoreFolders:Array<String> = [
+		'addons',
+		'data',
+		'songs',
+		'images',
+		'fonts',
+		'sounds',
+		'music',
+		'shaders',
+		'videos'
+	];
+
 	private static var globalMods:Array<String> = [];
 
 	inline public static function getGlobalMods()
@@ -144,13 +157,44 @@ class Mods
 				#else
 				var rawJson:String = Assets.getText(path);
 				#end
-				if(rawJson != null && rawJson.length > 0) return tjson.TJSON.parse(rawJson);
+				if(rawJson != null && rawJson.length > 0)
+				{
+					var pack:Dynamic = tjson.TJSON.parse(rawJson);
+
+					// If pack doesn't have basic Psych fields, try to adapt from Codename format
+					if(pack != null && !Reflect.hasField(pack, 'name') && Reflect.hasField(pack, 'description'))
+					{
+						// Codename pack.json may have different structure
+						// Try to extract compatible fields
+						if(!Reflect.hasField(pack, 'name'))
+							Reflect.setField(pack, 'name', folder);
+						if(!Reflect.hasField(pack, 'description'))
+							Reflect.setField(pack, 'description', '');
+						if(!Reflect.hasField(pack, 'color'))
+							Reflect.setField(pack, 'color', [255, 0, 0]);
+					}
+
+					return pack;
+				}
 			} catch(e:Dynamic) {
 				trace(e);
 			}
 		}
 		#end
 		return null;
+	}
+
+	/**
+	 * Check if a mod folder contains a Codename Engine mod.
+	 */
+	public static function isCodenameMod(?folder:String = null):Bool
+	{
+		#if MODS_ALLOWED
+		if(folder == null) folder = Mods.currentModDirectory;
+		return CodenameCompat.isCodenameMod(folder);
+		#else
+		return false;
+		#end
 	}
 
 	public static var updatedOnState:Bool = false;

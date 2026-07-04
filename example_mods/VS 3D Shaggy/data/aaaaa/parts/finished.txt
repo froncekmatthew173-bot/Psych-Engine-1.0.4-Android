@@ -1,0 +1,8 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="You got all my pieces!! My face is complete!!!" dbox="happy_flip"
+@dialogue pos="L" portrait="invi" text="If you could take me to where WB Shaggy is \nit would be pretty cool I think" dbox="normal"
+@event "Music_Zep" "swapMusic" "0"
+@dialogue pos="L" portrait="invi" text="I wanna do something" dbox="scary"
+@event "Music_Zep" "swapMusic" "1"
+@dialogue pos="L" portrait="invi" text="But it's a secret so don't ask!!" dbox="scream_flip"
+@dialogue pos="L" portrait="invi" text="Just take me there, you won't regret it" dbox="normal"

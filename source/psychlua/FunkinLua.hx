@@ -145,6 +145,7 @@ class FunkinLua {
 			set('inGameOver', GameOverSubstate.instance != null);
 			set('mustHitSection', curSection != null ? (curSection.mustHitSection == true) : false);
 			set('altAnim', curSection != null ? (curSection.altAnim == true) : false);
+			set('spamAnim', curSection != null ? (curSection.spamAnim == true) : false);
 			set('gfSection', curSection != null ? (curSection.gfSection == true) : false);
 
 			set('healthGainMult', game.healthGain);
@@ -858,6 +859,20 @@ class FunkinLua {
 			game.setOnScripts('ratingFC', game.ratingFC);
 		});
 		Lua_helper.add_callback(lua, "updateScoreText", function() game.updateScoreText());
+		Lua_helper.add_callback(lua, "convertMod", function(sourcePath:String, outputPath:String, ?engine:String):Bool {
+			#if MODS_ALLOWED
+			return backend.ModConverter.convert(sourcePath, outputPath, engine);
+			#else
+			return false;
+			#end
+		});
+		Lua_helper.add_callback(lua, "detectModEngine", function(modPath:String):String {
+			#if MODS_ALLOWED
+			return backend.ModConverter.detectEngine(modPath);
+			#else
+			return "unknown";
+			#end
+		});
 		Lua_helper.add_callback(lua, "getMouseX", function(?camera:String = 'game') {
 			var cam:FlxCamera = LuaUtils.cameraFromString(camera);
 			return FlxG.mouse.getScreenPosition(cam).x;

@@ -1,0 +1,50 @@
+{
+	"storyName": "cruel revelation",
+	"difficulties": "mania, normal, canon",
+	"hideFreeplay": true,
+	"weekBackground": "boxin",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"hideStoryMode": false,
+	"songs": [
+		[
+			"power link",
+			"rshaggy",
+			[
+				235,
+				0,
+				0
+			]
+		],
+		[
+			"revenge",
+			"matt-blue",
+			[
+				51,
+				137,
+				255
+			]
+		],
+		[
+			"final destination",
+			"fd",
+			[
+				143,
+				69,
+				128
+			]
+		]
+	],
+	"weekCharacters": [
+		"shaggymatt",
+		"bf",
+		"gf"
+	],
+	"hiddenUntilUnlocked": false,
+	"weekName": "Custom Week"
+}

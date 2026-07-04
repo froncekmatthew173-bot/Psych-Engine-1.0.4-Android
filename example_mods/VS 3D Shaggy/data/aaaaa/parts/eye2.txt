@@ -1,0 +1,6 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="Believe it or not, my eye was STOLEN!!" dbox="normal"
+@dialogue pos="L" portrait="invi" text="By the cockiest shaggy I know" dbox="sad"
+@dialogue pos="L" portrait="invi" text="He just took it and pocketed it!! Like it was a \nfucking penny on the street!!!!" dbox="angry_flip"
+@dialogue pos="L" portrait="invi" text="Luckily the shaggy that took it is also the \nstupidest one" dbox="happy_flip"
+@dialogue pos="L" portrait="invi" text="He probably drops it after he screams his \nlungs out singing" dbox="normal"

@@ -1,0 +1,4 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="..." dbox="scream_flip"
+@dialogue pos="L" portrait="invi" text="Who??" dbox="worried"
+

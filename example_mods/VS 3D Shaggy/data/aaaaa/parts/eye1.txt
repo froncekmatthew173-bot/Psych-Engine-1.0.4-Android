@@ -1,0 +1,5 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="My only missing piece now is my EYE" dbox="normal"
+@dialogue pos="L" portrait="invi" text="Has more importance than just sight of course" dbox="happy"
+@dialogue pos="L" portrait="invi" text="..." dbox="normal"
+@dialogue pos="L" portrait="invi" text="Would you believe me if I told you it could \nshoot LASERS??" dbox="scream_flip"

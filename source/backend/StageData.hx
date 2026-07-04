@@ -82,6 +82,43 @@ class StageData {
 			#if MODS_ALLOWED
 			if(FileSystem.exists(path))
 				return cast tjson.TJSON.parse(File.getContent(path));
+
+			// Check for Codename Engine XML stage file
+			var codenameXmlPath:String = Paths.getPath('data/stages/' + stage + '.xml', TEXT, null, true);
+			if(FileSystem.exists(codenameXmlPath))
+			{
+				try
+				{
+					var xmlContent:String = File.getContent(codenameXmlPath);
+					var convertedJson:Dynamic = CodenameCompat.convertStageXml(xmlContent);
+					if(convertedJson != null)
+						return cast convertedJson;
+				}
+				catch(e:Dynamic)
+				{
+					trace('Error converting Codename stage XML for "$stage": $e');
+				}
+			}
+
+			// Also check mod folder data/stages/ for Codename XML
+			if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0)
+			{
+				var modXmlPath:String = Paths.mods(Mods.currentModDirectory + '/data/stages/' + stage + '.xml');
+				if(FileSystem.exists(modXmlPath))
+				{
+					try
+					{
+						var xmlContent:String = File.getContent(modXmlPath);
+						var convertedJson:Dynamic = CodenameCompat.convertStageXml(xmlContent);
+						if(convertedJson != null)
+							return cast convertedJson;
+					}
+					catch(e:Dynamic)
+					{
+						trace('Error converting Codename stage XML for "$stage": $e');
+					}
+				}
+			}
 			#else
 			if(Assets.exists(path))
 				return cast tjson.TJSON.parse(Assets.getText(path));

@@ -1,0 +1,2 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="Welcome" dbox="normal"

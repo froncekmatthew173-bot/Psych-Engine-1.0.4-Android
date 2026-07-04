@@ -216,14 +216,54 @@ class Paths
 	inline static public function music(key:String, ?modsAllowed:Bool = true):Sound
 		return returnSound('music/$key', modsAllowed);
 
-	inline static public function inst(song:String, ?modsAllowed:Bool = true):Sound
-		return returnSound('${formatToSongPath(song)}/Inst', 'songs', modsAllowed);
+	static public function inst(song:String, ?modsAllowed:Bool = true):Sound
+	{
+		var songPath:String = formatToSongPath(song);
 
-	inline static public function voices(song:String, postfix:String = null, ?modsAllowed:Bool = true):Sound
+		#if MODS_ALLOWED
+		if(modsAllowed)
+		{
+			// Check for Codename Engine song path: songs/<name>/song/Inst.ogg
+			var codenamePath:String = modFolders('songs/$songPath/song/Inst.$SOUND_EXT');
+			if(FileSystem.exists(codenamePath))
+				return Sound.fromFile(codenamePath);
+
+			// Check global mods
+			for(mod in Mods.getGlobalMods())
+			{
+				var modPath:String = mods('$mod/songs/$songPath/song/Inst.$SOUND_EXT');
+				if(FileSystem.exists(modPath))
+					return Sound.fromFile(modPath);
+			}
+		}
+		#end
+		return returnSound('${songPath}/Inst', 'songs', modsAllowed);
+	}
+
+	static public function voices(song:String, postfix:String = null, ?modsAllowed:Bool = true):Sound
 	{
 		var songKey:String = '${formatToSongPath(song)}/Voices';
 		if(postfix != null) songKey += '-' + postfix;
-		//trace('songKey test: $songKey');
+
+		#if MODS_ALLOWED
+		if(modsAllowed)
+		{
+			// Check for Codename Engine song path: songs/<name>/song/Voices.ogg or songs/<name>/song/Voices-<postfix>.ogg
+			var songPath:String = formatToSongPath(song);
+			var codenamePostfix:String = (postfix != null && postfix.length > 0) ? '-$postfix' : '';
+			var codenamePath:String = modFolders('songs/$songPath/song/Voices$codenamePostfix.$SOUND_EXT');
+			if(FileSystem.exists(codenamePath))
+				return Sound.fromFile(codenamePath);
+
+			// Check global mods
+			for(mod in Mods.getGlobalMods())
+			{
+				var modPath:String = mods('$mod/songs/$songPath/song/Voices$codenamePostfix.$SOUND_EXT');
+				if(FileSystem.exists(modPath))
+					return Sound.fromFile(modPath);
+			}
+		}
+		#end
 		return returnSound(songKey, 'songs', modsAllowed, false);
 	}
 
@@ -383,16 +423,25 @@ class Paths
 	inline static public function getSparrowAtlas(key:String, ?parentFolder:String = null, ?allowGPU:Bool = true):FlxAtlasFrames
 	{
 		if(key.contains('psychic')) trace(key, parentFolder, allowGPU);
+
+		// Codename Engine fallback: noteSkins/NOTE_assets -> game/notes/default
+		var resolvedKey:String = key;
 		var imageLoaded:FlxGraphic = image(key, parentFolder, allowGPU);
+		if (imageLoaded == null && key == 'noteSkins/NOTE_assets')
+		{
+			resolvedKey = 'game/notes/default';
+			imageLoaded = image(resolvedKey, parentFolder, allowGPU);
+		}
+
 		#if MODS_ALLOWED
 		var xmlExists:Bool = false;
 
-		var xml:String = modsXml(key);
+		var xml:String = modsXml(resolvedKey);
 		if(FileSystem.exists(xml)) xmlExists = true;
 
-		return FlxAtlasFrames.fromSparrow(imageLoaded, (xmlExists ? File.getContent(xml) : getPath(Language.getFileTranslation('images/$key') + '.xml', TEXT, parentFolder)));
+		return FlxAtlasFrames.fromSparrow(imageLoaded, (xmlExists ? File.getContent(xml) : getPath(Language.getFileTranslation('images/$resolvedKey') + '.xml', TEXT, parentFolder)));
 		#else
-		return FlxAtlasFrames.fromSparrow(imageLoaded, getPath(Language.getFileTranslation('images/$key') + '.xml', TEXT, parentFolder));
+		return FlxAtlasFrames.fromSparrow(imageLoaded, getPath(Language.getFileTranslation('images/$resolvedKey') + '.xml', TEXT, parentFolder));
 		#end
 	}
 
@@ -483,6 +532,32 @@ class Paths
 
 	inline static public function modsImagesJson(key:String)
 		return modFolders('images/' + key + '.json');
+
+	// Codename Engine specific paths
+	inline static public function codenameSongInst(song:String)
+		return modFolders('songs/${formatToSongPath(song)}/song/Inst.$SOUND_EXT');
+
+	inline static public function codenameSongVoices(song:String, postfix:String = null)
+	{
+		var path:String = 'songs/${formatToSongPath(song)}/song/Voices';
+		if(postfix != null && postfix.length > 0) path += '-$postfix';
+		return modFolders('$path.$SOUND_EXT');
+	}
+
+	inline static public function codenameSongMeta(song:String)
+		return modFolders('songs/${formatToSongPath(song)}/meta.json');
+
+	inline static public function codenameSongChart(song:String, difficulty:String)
+		return modFolders('songs/${formatToSongPath(song)}/charts/${difficulty.toLowerCase()}.json');
+
+	inline static public function codenameCharacterXml(character:String)
+		return modFolders('data/characters/$character.xml');
+
+	inline static public function codenameStageXml(stage:String)
+		return modFolders('data/stages/$stage.xml');
+
+	inline static public function codenameWeekXml(week:String)
+		return modFolders('data/weeks/weeks/$week.xml');
 
 	static public function modFolders(key:String)
 	{

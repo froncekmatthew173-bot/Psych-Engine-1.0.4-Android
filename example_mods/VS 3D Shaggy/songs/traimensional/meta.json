@@ -1,0 +1,15 @@
+{
+	"customValues": {},
+	"color": "#2B5648",
+	"opponentModeAllowed": true,
+	"icon": "shaggy",
+	"difficulties": [
+		"normal"
+	],
+	"coopAllowed": true,
+	"stepsPerBeat": 4,
+	"displayName": "shag",
+	"beatsPerMeasure": 4,
+	"needsVoices": true,
+	"bpm": 194
+}

@@ -1,0 +1,5 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="Ah yes the parts of my face" dbox="happy"
+@dialogue pos="L" portrait="invi" text="They've been stripped away from me and are \nnow scattered" dbox="normal"
+@dialogue pos="L" portrait="invi" text="But they're not far apart at all!!" dbox="happy"
+@dialogue pos="L" portrait="invi" text="You'll have an easy time finding all of them!! \nBELIEVE ME!!" dbox="scream_flip"

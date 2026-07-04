@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="3d.png">
+	<SubTexture name="A0000" x="694" y="247" width="180" height="123" frameX="2" frameY="1" frameWidth="176" frameHeight="121" />
+	<SubTexture name="A confirm0000" x="159" y="373" width="191" height="131" frameX="2" frameY="1" frameWidth="188" frameHeight="129" />
+	<SubTexture name="A confirm0001" x="0" y="972" width="158" height="109" frameX="-14" frameY="-10" frameWidth="188" frameHeight="129" />
+	<SubTexture name="A confirm0002" x="0" y="972" width="158" height="109" frameX="-14" frameY="-10" frameWidth="188" frameHeight="129" />
+	<SubTexture name="A confirm0003" x="694" y="493" width="179" height="123" frameX="-4" frameY="-3" frameWidth="188" frameHeight="129" />
+	<SubTexture name="A confirm0004" x="694" y="493" width="179" height="123" frameX="-4" frameY="-3" frameWidth="188" frameHeight="129" />
+	<SubTexture name="A hold0000" x="1180" y="391" width="66" height="44" />
+	<SubTexture name="A tail0000" x="1178" y="189" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="B0000" x="538" y="349" width="123" height="178" frameX="2" frameY="2" frameWidth="120" frameHeight="174" />
+	<SubTexture name="B confirm0000" x="538" y="160" width="131" height="189" frameX="1" frameY="2" frameWidth="129" frameHeight="186" />
+	<SubTexture name="B confirm0001" x="997" y="0" width="111" height="159" frameX="-9" frameY="-13" frameWidth="129" frameHeight="186" />
+	<SubTexture name="B confirm0002" x="997" y="0" width="111" height="159" frameX="-9" frameY="-13" frameWidth="129" frameHeight="186" />
+	<SubTexture name="B confirm0003" x="0" y="795" width="123" height="177" frameX="-4" frameY="-3" frameWidth="129" frameHeight="186" />
+	<SubTexture name="B confirm0004" x="0" y="795" width="123" height="177" frameX="-4" frameY="-3" frameWidth="129" frameHeight="186" />
+	<SubTexture name="B hold0000" x="1180" y="267" width="66" height="44" />
+	<SubTexture name="B tail0000" x="1108" y="113" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="C0000" x="875" y="0" width="122" height="179" frameX="2" frameY="2" frameWidth="118" frameHeight="176" />
+	<SubTexture name="C confirm0000" x="0" y="176" width="133" height="197" frameX="1" frameY="2" frameWidth="131" frameHeight="194" />
+	<SubTexture name="C confirm0001" x="875" y="539" width="111" height="164" frameX="-10" frameY="-14" frameWidth="131" frameHeight="194" />
+	<SubTexture name="C confirm0002" x="875" y="539" width="111" height="164" frameX="-10" frameY="-14" frameWidth="131" frameHeight="194" />
+	<SubTexture name="C confirm0003" x="875" y="179" width="121" height="180" frameX="-5" frameY="-6" frameWidth="131" frameHeight="194" />
+	<SubTexture name="C confirm0004" x="875" y="179" width="121" height="180" frameX="-5" frameY="-6" frameWidth="131" frameHeight="194" />
+	<SubTexture name="C hold0000" x="1180" y="343" width="66" height="44" />
+	<SubTexture name="C tail0000" x="1108" y="189" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="D0000" x="349" y="532" width="182" height="123" frameX="2" frameY="1" frameWidth="178" frameHeight="121" />
+	<SubTexture name="D confirm0000" x="176" y="0" width="203" height="138" frameX="2" frameY="1" frameWidth="199" frameHeight="136" />
+	<SubTexture name="D confirm0001" x="664" y="672" width="166" height="112" frameX="-16" frameY="-12" frameWidth="199" frameHeight="136" />
+	<SubTexture name="D confirm0002" x="664" y="672" width="166" height="112" frameX="-16" frameY="-12" frameWidth="199" frameHeight="136" />
+	<SubTexture name="D confirm0003" x="350" y="373" width="182" height="124" frameX="-8" frameY="-8" frameWidth="199" frameHeight="136" />
+	<SubTexture name="D confirm0004" x="350" y="373" width="182" height="124" frameX="-8" frameY="-8" frameWidth="199" frameHeight="136" />
+	<SubTexture name="D hold0000" x="1110" y="439" width="66" height="44" />
+	<SubTexture name="D tail0000" x="1108" y="265" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="E0000" x="0" y="373" width="159" height="159" frameX="-8" frameY="2" frameWidth="173" frameHeight="173" />
+	<SubTexture name="E confirm0000" x="0" y="0" width="176" height="176" frameX="2" frameY="2" frameWidth="173" frameHeight="173" />
+	<SubTexture name="E confirm0001" x="246" y="795" width="145" height="145" frameX="-15" frameY="-15" frameWidth="173" frameHeight="173" />
+	<SubTexture name="E confirm0002" x="246" y="795" width="145" height="145" frameX="-15" frameY="-15" frameWidth="173" frameHeight="173" />
+	<SubTexture name="E confirm0003" x="379" y="0" width="159" height="159" frameX="-9" frameY="-10" frameWidth="173" frameHeight="173" />
+	<SubTexture name="E confirm0004" x="379" y="0" width="159" height="159" frameX="-9" frameY="-10" frameWidth="173" frameHeight="173" />
+	<SubTexture name="E hold0000" x="1110" y="343" width="66" height="44" />
+	<SubTexture name="E tail0000" x="1178" y="113" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="F0000" x="0" y="672" width="179" height="123" frameX="1" frameY="1" frameWidth="177" frameHeight="121" />
+	<SubTexture name="F confirm0000" x="133" y="176" width="194" height="134" frameX="2" frameY="1" frameWidth="191" frameHeight="132" />
+	<SubTexture name="F confirm0001" x="498" y="672" width="166" height="114" frameX="-12" frameY="-9" frameWidth="191" frameHeight="132" />
+	<SubTexture name="F confirm0002" x="498" y="672" width="166" height="114" frameX="-12" frameY="-9" frameWidth="191" frameHeight="132" />
+	<SubTexture name="F confirm0003" x="694" y="370" width="180" height="123" frameX="-7" frameY="-2" frameWidth="191" frameHeight="132" />
+	<SubTexture name="F confirm0004" x="694" y="370" width="180" height="123" frameX="-7" frameY="-2" frameWidth="191" frameHeight="132" />
+	<SubTexture name="F hold0000" x="1180" y="391" width="66" height="44" />
+	<SubTexture name="F tail0000" x="1178" y="189" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="I0000" x="391" y="795" width="152" height="121" frameX="2" frameY="1" frameWidth="148" frameHeight="119" />
+	<SubTexture name="I confirm0000" x="0" y="532" width="174" height="140" frameX="2" frameY="2" frameWidth="171" frameHeight="137" />
+	<SubTexture name="I confirm0001" x="1108" y="0" width="140" height="113" frameX="-15" frameY="-12" frameWidth="171" frameHeight="137" />
+	<SubTexture name="I confirm0002" x="1108" y="0" width="140" height="113" frameX="-15" frameY="-12" frameWidth="171" frameHeight="137" />
+	<SubTexture name="I confirm0003" x="543" y="795" width="152" height="121" frameX="-9" frameY="-6" frameWidth="171" frameHeight="137" />
+	<SubTexture name="I confirm0004" x="543" y="795" width="152" height="121" frameX="-9" frameY="-6" frameWidth="171" frameHeight="137" />
+	<SubTexture name="I hold0000" x="1110" y="391" width="66" height="44" />
+	<SubTexture name="I tail0000" x="1108" y="265" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="alt A0000" x="531" y="532" width="160" height="122" frameX="2" frameY="2" frameWidth="156" frameHeight="119" />
+	<SubTexture name="alt A confirm0000" x="174" y="532" width="175" height="133" frameX="2" frameY="1" frameWidth="171" frameHeight="131" />
+	<SubTexture name="alt A confirm0001" x="846" y="795" width="148" height="112" frameX="-19" frameY="-10" frameWidth="171" frameHeight="131" />
+	<SubTexture name="alt A confirm0002" x="846" y="795" width="148" height="112" frameX="-19" frameY="-10" frameWidth="171" frameHeight="131" />
+	<SubTexture name="alt A confirm0003" x="338" y="672" width="160" height="121" frameX="-18" frameY="-6" frameWidth="171" frameHeight="131" />
+	<SubTexture name="alt A hold0000" x="1180" y="391" width="66" height="44" />
+	<SubTexture name="alt A tail0000" x="1178" y="189" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="alt A confirm0004" x="338" y="672" width="160" height="121" frameX="-18" frameY="-6" frameWidth="171" frameHeight="131" />
+	<SubTexture name="alt arrowLEFT0000" x="179" y="672" width="159" height="122" frameX="2" frameY="2" frameWidth="171" frameHeight="131" />
+	<SubTexture name="alt arrowright0000" x="695" y="795" width="151" height="121" frameX="2" frameY="-5" frameWidth="171" frameHeight="131" />
+	<SubTexture name="arrowDOWN0000" x="123" y="795" width="123" height="177" frameX="2" frameY="2" frameWidth="120" frameHeight="174" />
+	<SubTexture name="arrowEVIL0000" x="538" y="0" width="156" height="160" frameX="2" frameY="2" frameWidth="153" frameHeight="157" />
+	<SubTexture name="arrowLEFT0000" x="694" y="123" width="179" height="124" frameX="2" frameY="2" frameWidth="176" frameHeight="120" />
+	<SubTexture name="arrowRIGHT0000" x="694" y="0" width="181" height="123" frameX="2" frameY="2" frameWidth="178" frameHeight="120" />
+	<SubTexture name="arrowSPACE0000" x="379" y="159" width="159" height="159" frameX="2" frameY="2" frameWidth="156" frameHeight="156" />
+	<SubTexture name="arrowUP0000" x="875" y="359" width="121" height="180" frameX="2" frameY="2" frameWidth="118" frameHeight="176" />
+	<SubTexture name="A hold piece0000" x="1180" y="391" width="66" height="44" />
+	<SubTexture name="A hold end0000" x="1178" y="189" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="B hold piece0000" x="1180" y="267" width="66" height="44" />
+	<SubTexture name="B hold end0000" x="1108" y="113" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="C hold piece0000" x="1180" y="343" width="66" height="44" />
+	<SubTexture name="C hold end0000" x="1108" y="189" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="D hold piece0000" x="1110" y="439" width="66" height="44" />
+	<SubTexture name="D hold end0000" x="1108" y="265" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="E hold piece0000" x="1110" y="343" width="66" height="44" />
+	<SubTexture name="E hold end0000" x="1178" y="113" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="F hold piece0000" x="1180" y="391" width="66" height="44" />
+	<SubTexture name="F hold end0000" x="1178" y="189" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="I hold piece0000" x="1110" y="391" width="66" height="44" />
+	<SubTexture name="I hold end0000" x="1108" y="265" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="alt A hold piece0000" x="1180" y="391" width="66" height="44" />
+	<SubTexture name="alt A hold end0000" x="1178" y="189" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="G0000" x="538" y="349" width="123" height="178" frameX="2" frameY="2" frameWidth="120" frameHeight="174" />
+	<SubTexture name="G confirm0000" x="538" y="160" width="131" height="189" frameX="1" frameY="2" frameWidth="129" frameHeight="186" />
+	<SubTexture name="G confirm0001" x="997" y="0" width="111" height="159" frameX="-9" frameY="-13" frameWidth="129" frameHeight="186" />
+	<SubTexture name="G confirm0002" x="997" y="0" width="111" height="159" frameX="-9" frameY="-13" frameWidth="129" frameHeight="186" />
+	<SubTexture name="G confirm0003" x="0" y="795" width="123" height="177" frameX="-4" frameY="-3" frameWidth="129" frameHeight="186" />
+	<SubTexture name="G confirm0004" x="0" y="795" width="123" height="177" frameX="-4" frameY="-3" frameWidth="129" frameHeight="186" />
+	<SubTexture name="G hold0000" x="1180" y="267" width="66" height="44" />
+	<SubTexture name="G tail0000" x="1108" y="113" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="G hold piece0000" x="1180" y="267" width="66" height="44" />
+	<SubTexture name="G hold end0000" x="1108" y="113" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="H0000" x="875" y="0" width="122" height="179" frameX="2" frameY="2" frameWidth="118" frameHeight="176" />
+	<SubTexture name="H confirm0000" x="0" y="176" width="133" height="197" frameX="1" frameY="2" frameWidth="131" frameHeight="194" />
+	<SubTexture name="H confirm0001" x="875" y="539" width="111" height="164" frameX="-10" frameY="-14" frameWidth="131" frameHeight="194" />
+	<SubTexture name="H confirm0002" x="875" y="539" width="111" height="164" frameX="-10" frameY="-14" frameWidth="131" frameHeight="194" />
+	<SubTexture name="H confirm0003" x="875" y="179" width="121" height="180" frameX="-5" frameY="-6" frameWidth="131" frameHeight="194" />
+	<SubTexture name="H confirm0004" x="875" y="179" width="121" height="180" frameX="-5" frameY="-6" frameWidth="131" frameHeight="194" />
+	<SubTexture name="H hold0000" x="1180" y="343" width="66" height="44" />
+	<SubTexture name="H tail0000" x="1108" y="189" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+	<SubTexture name="H hold piece0000" x="1180" y="343" width="66" height="44" />
+	<SubTexture name="H hold end0000" x="1108" y="189" width="70" height="76" frameX="2" frameY="2" frameWidth="66" frameHeight="72" />
+</TextureAtlas>

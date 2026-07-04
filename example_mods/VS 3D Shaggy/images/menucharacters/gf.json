@@ -1,0 +1,9 @@
+{
+	"idle_anim": "GF Dancing Beat0",
+	"image": "GF_assets",
+	"position": [140, 140],
+	"flipX": false,
+	"antialiasing": true,
+	"scale": 0.5,
+	"confirm_anim": "GF Dancing Beat0"
+}

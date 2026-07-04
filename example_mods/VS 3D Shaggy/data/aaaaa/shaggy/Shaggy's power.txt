@@ -1,0 +1,8 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="Wait..." dbox="normal"
+@dialogue pos="L" portrait="invi" text="Don't tell me you bought into their percentage \nbullshit??" dbox="worried"
+@dialogue pos="L" portrait="invi" text="HAHAHA YOU FOOL THEY'RE JUST PLAYING \nWITH YOU!!" dbox="happy_flip"
+@dialogue pos="L" portrait="invi" text="I mean, don't get me wrong, they ARE extremely \nstrong, but..." dbox="happy"
+@dialogue pos="L" portrait="invi" text="How the fuck would a being know his exact \nusage percentage down to the decimals??" dbox="worried"
+@dialogue pos="L" portrait="invi" text="You need an external reader to do that (which I had)" dbox="normal"
+@dialogue pos="L" portrait="invi" text="I tell you, the numbers they spit at you are VAST \nexaggerations!!" dbox="happy_flip"

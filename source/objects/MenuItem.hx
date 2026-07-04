@@ -1,5 +1,7 @@
 package objects;
 
+import flixel.graphics.FlxGraphic;
+
 class MenuItem extends FlxSprite
 {
 	public var targetY:Float = 0;
@@ -7,9 +9,13 @@ class MenuItem extends FlxSprite
 	public function new(x:Float, y:Float, weekName:String = '')
 	{
 		super(x, y);
-		loadGraphic(Paths.image('storymenu/' + weekName));
+		var graphic:FlxGraphic = Paths.image('storymenu/' + weekName);
+		// Codename Engine fallback: menus/storymenu/weeks/<week>.png
+		if(graphic == null && Mods.isCodenameMod())
+			graphic = Paths.image('menus/storymenu/weeks/' + weekName);
+		if(graphic != null)
+			loadGraphic(graphic);
 		antialiasing = ClientPrefs.data.antialiasing;
-		//trace('Test added: ' + WeekData.getWeekNumber(weekNum) + ' (' + weekNum + ')');
 	}
 
 	public var isFlashing(default, set):Bool = false;

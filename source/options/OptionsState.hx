@@ -14,6 +14,7 @@ class OptionsState extends MusicBeatState
 		'Gameplay'
 		#if TRANSLATIONS_ALLOWED , 'Language' #end
 		,'Mobile Options'
+		,'Convert Mod'
 	];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
@@ -43,6 +44,8 @@ class OptionsState extends MusicBeatState
 				openSubState(new mobile.options.MobileOptionsSubState());
 			case 'Language':
 				openSubState(new options.LanguageSubState());
+			case 'Convert Mod':
+				openSubState(new substates.ModConverterSubState());
 		}
 	}
 

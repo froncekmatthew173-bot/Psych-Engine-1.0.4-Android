@@ -105,6 +105,24 @@ class HScript extends Iris
 			if(f.contains('/') && !f.contains('\n')) {
 				scriptThing = File.getContent(f);
 				scriptName = f;
+
+				// Detect Codename Engine APIs and warn
+				#if MODS_ALLOWED
+				var codenameApis:Array<String> = psychlua.CodenameShim.detectCodenameApis(scriptThing);
+				if(codenameApis.length > 0)
+				{
+					trace('Codename Engine APIs detected in $scriptName:');
+					for(api in codenameApis)
+						trace('  - $api');
+					if(psychlua.CodenameShim.shouldSkipScript(scriptThing))
+					{
+						trace('Script $scriptName uses too many unsupported Codename APIs, skipping...');
+						this.returnValue = null;
+						this.destroy();
+						return;
+					}
+				}
+				#end
 			}
 		}
 		#if LUA_ALLOWED
@@ -180,6 +198,27 @@ class HScript extends Iris
 		#if flxanimate
 		set('FlxAnimate', FlxAnimate);
 		#end
+
+		// Codename Engine compatibility stubs
+		set('FunkinSprite', flixel.FlxSprite); // FunkinSprite -> FlxSprite stub
+		set('StrumLine', null); // Codename StrumLine - not supported
+		set('Options', {colorHealthBar: false}); // Codename Options stub
+
+		// Mod Converter API
+		set('convertMod', function(sourcePath:String, outputPath:String, ?engine:String):Bool {
+			#if MODS_ALLOWED
+			return backend.ModConverter.convert(sourcePath, outputPath, engine);
+			#else
+			return false;
+			#end
+		});
+		set('detectModEngine', function(modPath:String):String {
+			#if MODS_ALLOWED
+			return backend.ModConverter.detectEngine(modPath);
+			#else
+			return "unknown";
+			#end
+		});
 
 		// Functions & Variables
 		set('setVar', function(name:String, value:Dynamic) {

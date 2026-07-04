@@ -1,0 +1,3 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="Nah I'm just messin with you hehe" dbox="happy"
+@dialogue pos="L" portrait="invi" text="(it would be fucking rad tho)" dbox="happy_flip"

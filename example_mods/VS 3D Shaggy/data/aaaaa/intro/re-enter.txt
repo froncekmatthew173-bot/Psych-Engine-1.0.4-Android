@@ -1,0 +1,4 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="Oh" dbox="surprised_flip"
+@dialogue pos="L" portrait="invi" text="You're back!" dbox="normal"
+@dialogue pos="L" portrait="invi" text="Um... Have you reconsidered?" dbox="worried"

@@ -133,6 +133,83 @@ class WeekData {
 					}
 				}
 			}
+
+			// Scan for Codename Engine XML week files in data/weeks/weeks/
+			var codenameWeekDir:String = directories[i] + 'data/weeks/weeks/';
+			if(FileSystem.exists(codenameWeekDir))
+			{
+				for (file in Paths.readDirectory(codenameWeekDir))
+				{
+					var path = haxe.io.Path.join([codenameWeekDir, file]);
+					if (!FileSystem.isDirectory(path) && file.endsWith('.xml'))
+					{
+						var weekName:String = file.substr(0, file.length - 4);
+						if(!weeksLoaded.exists(weekName))
+						{
+							addWeek(weekName, path, directories[i], i, originalLength);
+						}
+					}
+				}
+			}
+
+			// Also scan Codename songs/ folder for meta.json files to create freeplay entries
+			var codenameSongsDir:String = directories[i] + 'songs/';
+			if(FileSystem.exists(codenameSongsDir))
+			{
+				for (songFolder in Paths.readDirectory(codenameSongsDir))
+				{
+					var songFolderPath:String = haxe.io.Path.join([codenameSongsDir, songFolder]);
+					if(FileSystem.isDirectory(songFolderPath))
+					{
+						var metaPath:String = haxe.io.Path.join([songFolderPath, 'meta.json']);
+						if(FileSystem.exists(metaPath))
+						{
+							// Create a week entry for this song if it doesn't exist
+							var weekName:String = 'codename_' + songFolder;
+							if(!weeksLoaded.exists(weekName))
+							{
+								try
+								{
+									var metaContent:String = File.getContent(metaPath);
+									var meta:Dynamic = CodenameCompat.convertMetaJson(metaContent);
+									if(meta != null)
+									{
+										var weekFile:WeekFile = {
+											songs: [[meta.songName, "face", [146, 113, 253]]],
+											weekCharacters: ["", "bf", ""],
+											weekBackground: "stage",
+											weekBefore: "",
+											storyName: meta.displayName,
+											weekName: meta.displayName,
+											startUnlocked: true,
+											hiddenUntilUnlocked: false,
+											hideStoryMode: false,
+											hideFreeplay: false,
+											difficulties: ""
+										};
+
+										var weekData:WeekData = new WeekData(weekFile, weekName);
+										if(i >= originalLength)
+										{
+											weekData.folder = directories[i].substring(Paths.mods().length, directories[i].length-1);
+										}
+
+										if((PlayState.isStoryMode && !weekData.hideStoryMode) || (!PlayState.isStoryMode && !weekData.hideFreeplay))
+										{
+											weeksLoaded.set(weekName, weekData);
+											weeksList.push(weekName);
+										}
+									}
+								}
+								catch(e:Dynamic)
+								{
+									trace('Error loading Codename song meta for "$songFolder": $e');
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		#end
 	}
@@ -164,7 +241,44 @@ class WeekData {
 		var rawJson:String = null;
 		#if MODS_ALLOWED
 		if(FileSystem.exists(path)) {
+			// If path is already an XML file (from Codename week scan), convert directly
+			if(path.endsWith('.xml'))
+			{
+				try
+				{
+					var xmlContent:String = File.getContent(path);
+					var convertedJson:Dynamic = CodenameCompat.convertWeekXml(xmlContent);
+					if(convertedJson != null)
+						return cast convertedJson;
+				}
+				catch(e:Dynamic)
+				{
+					trace('Error converting Codename week XML: $e');
+				}
+				return null;
+			}
 			rawJson = File.getContent(path);
+		}
+
+		// Check for Codename Engine XML week file
+		if(rawJson == null || rawJson.length == 0)
+		{
+			// Convert JSON path to XML path (weeks/name.json -> data/weeks/weeks/name.xml)
+			var xmlPath:String = path.replace('weeks/', 'data/weeks/weeks/').replace('.json', '.xml');
+			if(FileSystem.exists(xmlPath))
+			{
+				try
+				{
+					var xmlContent:String = File.getContent(xmlPath);
+					var convertedJson:Dynamic = CodenameCompat.convertWeekXml(xmlContent);
+					if(convertedJson != null)
+						return cast convertedJson;
+				}
+				catch(e:Dynamic)
+				{
+					trace('Error converting Codename week XML: $e');
+				}
+			}
 		}
 		#else
 		if(OpenFlAssets.exists(path)) {

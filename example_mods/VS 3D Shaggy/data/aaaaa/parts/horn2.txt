@@ -1,0 +1,8 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="I actually dropped my horn myself" dbox="worried"
+@dialogue pos="L" portrait="invi" text="And I kinda maybe left it like" dbox="normal"
+@dialogue pos="L" portrait="invi" text="Outside" dbox="normal"
+@dialogue pos="L" portrait="invi" text="Of the plane of existence??" dbox="xd_flip"
+@dialogue pos="L" portrait="invi" text="I mean don't get me wrong, it IS outside of \nthe mansion" dbox="worried"
+@dialogue pos="L" portrait="invi" text="But you know, you have to find a moment in which the \nfabric of space twists or rotates or something" dbox="normal"
+@dialogue pos="L" portrait="invi" text="So you can peek OUTSIDE of reality!!" dbox="happy"

@@ -1,0 +1,2 @@
+Value1 Color (use based on the color #)
+Value2 Time that Flash will be on screen

@@ -191,7 +191,8 @@ class Main extends Sprite
 		LimeSystem.allowScreenTimeout = ClientPrefs.data.screensaver;
 		#end
 
-		Application.current.window.vsync = ClientPrefs.data.vsync;
+		//vsync not available on this lime version
+		//try { Application.current.window.vsync = ClientPrefs.data.vsync; } catch(e:Dynamic) {}
 
 		// shader coords fix
 		FlxG.signals.gameResized.add(function (w, h) {

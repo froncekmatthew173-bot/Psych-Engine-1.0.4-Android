@@ -1,6 +1,7 @@
 package objects;
 
 import backend.animation.PsychAnimationController;
+import backend.CodenameCompat;
 
 import flixel.util.FlxSort;
 import flixel.util.FlxDestroyUtil;
@@ -112,10 +113,61 @@ class Character extends FlxSprite
 		var path:String = Paths.getPath(characterPath, TEXT);
 		#if MODS_ALLOWED
 		if (!FileSystem.exists(path))
-		#else
-		if (!Assets.exists(path))
 		#end
 		{
+			// Check for Codename Engine XML character file
+			#if MODS_ALLOWED
+			var codenameXmlPath:String = Paths.getPath('data/characters/$character.xml', TEXT);
+			if (FileSystem.exists(codenameXmlPath))
+			{
+				try
+				{
+					var xmlContent:String = File.getContent(codenameXmlPath);
+					var convertedJson:Dynamic = CodenameCompat.convertCharacterXml(xmlContent);
+					if (convertedJson != null)
+					{
+						loadCharacterFile(convertedJson);
+						skipDance = false;
+						hasMissAnimations = hasAnimation('singLEFTmiss') || hasAnimation('singDOWNmiss') || hasAnimation('singUPmiss') || hasAnimation('singRIGHTmiss');
+						recalculateDanceIdle();
+						dance();
+						return;
+					}
+				}
+				catch(e:Dynamic)
+				{
+					trace('Error converting Codename character XML for "$character": $e');
+				}
+			}
+
+			// Also check mod folder data/characters/ for Codename XML
+			if (Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0)
+			{
+				var modXmlPath:String = Paths.mods(Mods.currentModDirectory + '/data/characters/$character.xml');
+				if (FileSystem.exists(modXmlPath))
+				{
+					try
+					{
+						var xmlContent:String = File.getContent(modXmlPath);
+						var convertedJson:Dynamic = CodenameCompat.convertCharacterXml(xmlContent);
+						if (convertedJson != null)
+						{
+							loadCharacterFile(convertedJson);
+							skipDance = false;
+							hasMissAnimations = hasAnimation('singLEFTmiss') || hasAnimation('singDOWNmiss') || hasAnimation('singUPmiss') || hasAnimation('singRIGHTmiss');
+							recalculateDanceIdle();
+							dance();
+							return;
+						}
+					}
+					catch(e:Dynamic)
+					{
+						trace('Error converting Codename character XML for "$character": $e');
+					}
+				}
+			}
+			#end
+
 			path = Paths.getSharedPath('characters/' + DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
 			missingCharacter = true;
 			missingText = new FlxText(0, 0, 300, 'ERROR:\n$character.json', 16);

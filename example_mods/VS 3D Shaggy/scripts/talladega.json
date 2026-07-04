@@ -1,0 +1,32 @@
+{
+	"songs": [
+		[
+			"aaaaa",
+			"zshaggy",
+			[
+				20,
+				72,
+				0
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": true,
+	"weekBackground": "",
+	"difficulties": "canon",
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"storyName": "	BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+	"weekName": "Custom Week",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}

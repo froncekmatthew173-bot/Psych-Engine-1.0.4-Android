@@ -1,0 +1,239 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [7, 19],
+			"anim": "singLEFTmiss",
+			"fps": 24,
+			"name": "BF NOTE LEFT MISS",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [-14, -19],
+			"anim": "singDOWNmiss",
+			"fps": 24,
+			"name": "BF NOTE DOWN MISS",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [-46, 27],
+			"anim": "singUPmiss",
+			"fps": 24,
+			"name": "BF NOTE UP MISS",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [-44, 22],
+			"anim": "singRIGHTmiss",
+			"fps": 24,
+			"name": "BF NOTE RIGHT MISS",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [-3, 5],
+			"anim": "hey",
+			"fps": 24,
+			"name": "BF HEY",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [14, 18],
+			"anim": "hurt",
+			"fps": 24,
+			"name": "BF hit",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [-4, 0],
+			"anim": "scared",
+			"fps": 24,
+			"name": "BF idle shaking",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [-10, -16],
+			"anim": "dodge",
+			"fps": 24,
+			"name": "boyfriend dodge",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [294, 267],
+			"anim": "attack",
+			"fps": 24,
+			"name": "boyfriend attack",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [-40, -40],
+			"anim": "pre-attack",
+			"fps": 24,
+			"name": "bf pre attack",
+			"indices": []
+		},
+		{
+			"offsets": [-5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "sleft",
+			"indices": [],
+			"name": "sleft"
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "sdown",
+			"indices": [],
+			"name": "sdown"
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "sup",
+			"indices": [],
+			"name": "sup"
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "sright",
+			"indices": [],
+			"name": "sright"
+		},
+		{
+			"offsets": [51, -2],
+			"loop": false,
+			"fps": 24,
+			"anim": "intro-static",
+			"indices": [],
+			"name": "intro0000"
+		},
+		{
+			"offsets": [51, -2],
+			"loop": false,
+			"fps": 24,
+			"anim": "intro",
+			"indices": [],
+			"name": "intro"
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "snap",
+			"indices": [],
+			"name": "aidle"
+		},
+		{
+			"loop": false,
+			"offsets": [5, -1],
+			"anim": "singSPACE",
+			"fps": 24,
+			"name": "adown",
+			"indices": []
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT-alt",
+			"indices": [],
+			"name": "aleft"
+		},
+		{
+			"offsets": [5, -1],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT-alt",
+			"indices": [],
+			"name": "aright"
+		},
+		{
+			"loop": false,
+			"offsets": [5, -1],
+			"anim": "sleft-alt",
+			"fps": 24,
+			"name": "sleft",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [5, -1],
+			"anim": "sright-alt",
+			"fps": 24,
+			"name": "sright",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [5, -1],
+			"anim": "sspace",
+			"fps": 24,
+			"name": "sup",
+			"indices": []
+		}
+	],
+	"vocals_file": "shag",
+	"no_antialiasing": true,
+	"image": "characters/shaggy",
+	"position": [0, 0],
+	"healthicon": "shaggy-3d",
+	"flip_x": false,
+	"healthbar_colors": [43, 86, 72],
+	"camera_position": [0, 0],
+	"sing_duration": 4,
+	"scale": 1.4,
+	"_editor_isPlayer": false
+}

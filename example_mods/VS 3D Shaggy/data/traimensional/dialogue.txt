@@ -1,0 +1,4 @@
+@wait time="1s"
+@dialogue pos="L" portrait="shaggy:normal" text="Woah man! This is a whole extra \ndimension to work with!"
+@dialogue pos="L" portrait="shaggy:normal" text="Like, hope you're ready for what I got in \nstore little dude!"
+@dialogue pos="R" portrait="bf:happy" text="Beep"

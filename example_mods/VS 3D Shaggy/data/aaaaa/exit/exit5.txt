@@ -1,0 +1,3 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="Be sure to not die!!" dbox="happy"
+@dialogue pos="L" portrait="invi" text="Oh wait you can't" dbox="normal"

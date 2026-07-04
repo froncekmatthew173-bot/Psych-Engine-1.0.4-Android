@@ -1,0 +1,8 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="..." dbox="normal"
+@dialogue pos="L" portrait="invi" text="You... Did it...?" dbox="worried"
+@dialogue pos="L" portrait="invi" text="You collected all of my pieces.\nWithout needing any of my help." dbox="normal"
+@dialogue pos="L" portrait="invi" text="We didn't get to talk that much, huh?" dbox="sad"
+@dialogue pos="L" portrait="invi" text="Well, there's one more thing that's left now" dbox="worried"
+@dialogue pos="L" portrait="invi" text="Take me to where WB Shaggy is" dbox="normal"
+@dialogue pos="L" portrait="invi" text="I have to do something." dbox="normal"

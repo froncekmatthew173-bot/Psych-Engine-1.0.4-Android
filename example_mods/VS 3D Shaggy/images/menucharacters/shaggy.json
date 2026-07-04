@@ -1,0 +1,9 @@
+{
+	"idle_anim": "intro0000",
+	"image": "shaggy",
+	"position": [460, 460],
+	"flipX": false,
+	"antialiasing": true,
+	"scale": 0.65,
+	"confirm_anim": "intro0000"
+}

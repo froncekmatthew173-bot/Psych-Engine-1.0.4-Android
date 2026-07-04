@@ -95,8 +95,12 @@ class Note extends FlxSprite
 
 	public static var SUSTAIN_SIZE:Int = 44;
 	public static var swagWidth:Float = 160 * 0.7;
-	public static var colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
-	public static var defaultNoteSkin(default, never):String = 'noteSkins/NOTE_assets';
+	public static var colArray:Array<String> = ['purple', 'blue', 'green', 'red', 'space'];
+	public static var defaultNoteSkin(get, never):String;
+	private static function get_defaultNoteSkin():String {
+		if (Mods.isCodenameMod()) return 'game/notes/default';
+		return 'noteSkins/NOTE_assets';
+	}
 
 	public var noteSplashData:NoteSplashData = {
 		disabled: false,
@@ -220,6 +224,8 @@ class Note extends FlxSprite
 					hitsoundChartEditor = false;
 				case 'Alt Animation':
 					animSuffix = '-alt';
+				case 'Spam Animation':
+					animSuffix = 'Spam';
 				case 'No Animation':
 					noAnimation = true;
 					noMissAnimation = true;

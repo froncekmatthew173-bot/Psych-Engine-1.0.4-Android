@@ -1,0 +1,6 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="Oh!! You collected a lot of my pieces!!" dbox="normal"
+@dialogue pos="L" portrait="invi" text="That's... great!!" dbox="happy"
+@dialogue pos="L" portrait="invi" text="You didn't even need my help, huh?" dbox="worried"
+@dialogue pos="L" portrait="invi" text="Well, I'm glad you're having an easy time finding them." dbox="normal"
+

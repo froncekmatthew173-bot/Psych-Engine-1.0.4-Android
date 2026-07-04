@@ -302,6 +302,6 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 
 	#if native
 	function onChangeVSync()
-		lime.app.Application.current.window.vsync = ClientPrefs.data.vsync;
+		{} // vsync not available on this lime version
 	#end
 }

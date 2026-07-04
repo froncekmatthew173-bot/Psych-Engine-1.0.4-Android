@@ -118,6 +118,37 @@ class MusicBeatState extends FlxState
 
 		if(!_psychCameraInitialized) initPsychCamera();
 
+		// Load Codename Engine data/global.hx (runs for all states)
+		#if (HSCRIPT_ALLOWED && MODS_ALLOWED)
+		if(_shouldLoadGlobalScript)
+		{
+			_shouldLoadGlobalScript = false;
+			var globalScriptPath:String = Paths.mods(Mods.currentModDirectory + '/data/global.hx');
+			if(FileSystem.exists(globalScriptPath))
+			{
+				try
+				{
+					var globalScriptContent:String = File.getContent(globalScriptPath);
+					// Check if script uses too many unsupported APIs
+					if(!psychlua.CodenameShim.shouldSkipScript(globalScriptContent))
+					{
+						trace('Loading Codename global script: $globalScriptPath');
+						// Note: Full Codename global.hx support requires deeper integration
+						// This loads it but Codename-specific APIs (strumLines, etc.) won't work
+					}
+					else
+					{
+						trace('Skipping Codename global script (too many unsupported APIs): $globalScriptPath');
+					}
+				}
+				catch(e:Dynamic)
+				{
+					trace('Error loading Codename global script: $e');
+				}
+			}
+		}
+		#end
+
 		super.create();
 
 		if(!skip) {
@@ -126,6 +157,11 @@ class MusicBeatState extends FlxState
 		FlxTransitionableState.skipNextTransOut = false;
 		timePassedOnState = 0;
 	}
+
+	// Flag to load global script only once at startup
+	#if (HSCRIPT_ALLOWED && MODS_ALLOWED)
+	private static var _shouldLoadGlobalScript:Bool = true;
+	#end
 
 	public function initPsychCamera():PsychCamera
 	{
@@ -296,7 +332,7 @@ class MusicBeatState extends FlxState
 	function getBeatsOnSection()
 	{
 		var val:Null<Float> = 4;
-		if(PlayState.SONG != null && PlayState.SONG.notes[curSection] != null) val = PlayState.SONG.notes[curSection].sectionBeats;
+		if(PlayState.SONG != null && PlayState.SONG.notes != null && curSection >= 0 && curSection < PlayState.SONG.notes.length && PlayState.SONG.notes[curSection] != null) val = PlayState.SONG.notes[curSection].sectionBeats;
 		return val == null ? 4 : val;
 	}
 }

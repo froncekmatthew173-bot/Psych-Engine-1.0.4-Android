@@ -1,0 +1,8 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="You got all my pieces!! My face is complete!!!" dbox="happy_flip"
+@dialogue pos="L" portrait="invi" text="That said tho I remember having a Dark Eye\ncapable of corrupting every living being back \nwhen I wasn't a mask." dbox="normal"
+@dialogue pos="L" portrait="invi" text="But unfortunately I lost it while I was observing\na universe" dbox="confused"
+@dialogue pos="L" portrait="invi" text="If my memories are correct, (Which they are)\nI lost it in some sort of cornfield" dbox="happy"
+@dialogue pos="L" portrait="invi" text="I guess a scarecrow or something like that\npicked it up" dbox="normal"
+@dialogue pos="L" portrait="invi" text="If you ever find someone like that, maybe\nhe has my Dark Eye." dbox="normal"
+@dialogue pos="L" portrait="invi" text="But you should take me to where\nWB Shaggy is it would be pretty cool I think" dbox="happy"

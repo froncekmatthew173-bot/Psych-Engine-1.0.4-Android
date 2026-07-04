@@ -1,0 +1,2 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="Goin' back to the menu" dbox="normal"

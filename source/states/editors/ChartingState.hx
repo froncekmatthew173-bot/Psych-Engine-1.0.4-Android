@@ -2349,6 +2349,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			var mustHitSec:Bool = lastSection != null ? lastSection.mustHitSection : true;
 			var changeBpmSec:Bool = lastSection != null ? lastSection.changeBPM : false;
 			var altAnimSec:Bool = lastSection != null ? lastSection.altAnim : false;
+			var spamAnimSec:Bool = lastSection != null ? lastSection.spamAnim : false;
 			var gfSec:Bool = lastSection != null ? lastSection.gfSection : false;
 
 			while(!reachedLimit)
@@ -2360,6 +2361,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 					bpm: bpm,
 					changeBPM: changeBpmSec,
 					altAnim: altAnimSec,
+					spamAnim: spamAnimSec,
 					gfSection: gfSec
 				});
 
@@ -2429,6 +2431,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			mustHitCheckBox.checked = sec.mustHitSection;
 			gfSectionCheckBox.checked = sec.gfSection;
 			altAnimSectionCheckBox.checked = sec.altAnim;
+			spamAnimSectionCheckBox.checked = sec.spamAnim;
 			changeBpmCheckBox.checked = sec.changeBPM;
 			changeBpmStepper.value = Conductor.bpm;
 			beatsPerSecStepper.value = sec.sectionBeats;
@@ -3029,6 +3032,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 	var mustHitCheckBox:PsychUICheckBox;
 	var gfSectionCheckBox:PsychUICheckBox;
 	var altAnimSectionCheckBox:PsychUICheckBox;
+	var spamAnimSectionCheckBox:PsychUICheckBox;
 
 	var changeBpmCheckBox:PsychUICheckBox;
 	var changeBpmStepper:PsychUINumericStepper;
@@ -3122,6 +3126,11 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		{
 			var sec = getCurChartSection();
 			if(sec != null) sec.altAnim = altAnimSectionCheckBox.checked;
+		});
+		spamAnimSectionCheckBox = new PsychUICheckBox(objX + 300, objY, 'Spam Anim', 80, function()
+		{
+			var sec = getCurChartSection();
+			if(sec != null) sec.spamAnim = spamAnimSectionCheckBox.checked;
 		});
 
 		objY += 40;
@@ -3280,6 +3289,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		tab_group.add(mustHitCheckBox);
 		tab_group.add(gfSectionCheckBox);
 		tab_group.add(altAnimSectionCheckBox);
+		tab_group.add(spamAnimSectionCheckBox);
 
 		tab_group.add(new FlxText(beatsPerSecStepper.x, beatsPerSecStepper.y - 15, 100, 'Beats per Section:'));
 		tab_group.add(changeBpmCheckBox);

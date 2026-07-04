@@ -1,0 +1,6 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="HELL YEAH" dbox="happy_flip"
+@dialogue pos="L" portrait="invi" text="Holy shit!! Only one piece left!!" dbox="happy"
+@dialogue pos="L" portrait="invi" text="I believe in you bee. Last stretch of your adventure" dbox="normal"
+@dialogue pos="L" portrait="invi" text="With me" dbox="normal"
+@dialogue pos="L" portrait="invi" text="Fun fact - believing in me is literally an \nincorrect statement" dbox="happy_flip"

@@ -13,6 +13,8 @@ import flixel.FlxState;
 
 import flash.media.Sound;
 
+import backend.CodenameCompat;
+
 import backend.Song;
 import backend.StageData;
 import objects.Character;
@@ -565,6 +567,13 @@ class LoadingState extends MusicBeatState
 				}
 				else if(Paths.fileExists('$prefixVocals.${Paths.SOUND_EXT}', SOUND, false, 'songs'))
 					songsToPrepare.push(prefixVocals);
+				else if(Mods.isCodenameMod())
+				{
+					// Codename Engine: songs/<name>/song/Voices.ogg
+					var codenameVoices:String = Paths.mods(Mods.currentModDirectory + '/songs/$folder/song/Voices.${Paths.SOUND_EXT}');
+					if(FileSystem.exists(codenameVoices))
+						songsToPrepare.push('$folder/Voices');
+				}
 			}
 
 			if (player2 != player1)
@@ -701,15 +710,39 @@ class LoadingState extends MusicBeatState
 		});
 	}
 
-	inline private static function preloadCharacter(char:String, ?prefixVocals:String)
+	private static function preloadCharacter(char:String, ?prefixVocals:String)
 	{
+		if(char == null || char.length < 1) return;
 		try
 		{
 			var path:String = Paths.getPath('characters/$char.json', TEXT);
+			var character:Dynamic = null;
 			#if MODS_ALLOWED
-			var character:Dynamic = Json.parse(File.getContent(path));
+			if(FileSystem.exists(path))
+			{
+				character = Json.parse(File.getContent(path));
+			}
+			else
+			{
+				// Codename Engine: try XML character file
+				var xmlPath:String = Paths.getPath('data/characters/$char.xml', TEXT);
+				if(FileSystem.exists(xmlPath))
+				{
+					try
+					{
+						var xmlContent:String = File.getContent(xmlPath);
+						character = CodenameCompat.convertCharacterXml(xmlContent);
+					}
+					catch(e:Dynamic)
+					{
+						trace('Error converting Codename character XML for "$char": $e');
+						return;
+					}
+				}
+			}
+			if(character == null) return;
 			#else
-			var character:Dynamic = Json.parse(Assets.getText(path));
+			character = Json.parse(Assets.getText(path));
 			#end
 
 			var isAnimateAtlas:Bool = false;
@@ -763,6 +796,20 @@ class LoadingState extends MusicBeatState
 	static function preloadSound(key:String, ?path:String, ?modsAllowed:Bool = true, ?beepOnNull:Bool = true):Null<Sound>
 	{
 		var file:String = Paths.getPath(Language.getFileTranslation(key) + '.${Paths.SOUND_EXT}', SOUND, path, modsAllowed);
+
+		// Codename Engine fallback: try songs/<name>/song/<file>.ogg
+		if(!Paths.currentTrackedSounds.exists(file) && path == 'songs' && modsAllowed && Mods.isCodenameMod())
+		{
+			var parts:Array<String> = key.split('/');
+			if(parts.length >= 2)
+			{
+				var songName:String = parts[0];
+				var fileName:String = parts.length > 1 ? parts[1] : key;
+				var codenamePath:String = Paths.mods(Mods.currentModDirectory + '/songs/$songName/song/$fileName.${Paths.SOUND_EXT}');
+				if(FileSystem.exists(codenamePath))
+					file = codenamePath;
+			}
+		}
 
 		//trace('precaching sound: $file');
 		if(!Paths.currentTrackedSounds.exists(file))

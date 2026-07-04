@@ -1,0 +1,4 @@
+@wait time="1s"
+@dialogue pos="L" portrait="invi" text="Thank you bee!!" dbox="happy_flip"
+@dialogue pos="L" portrait="invi" text="Now there's 3 pieces left" dbox="normal"
+@dialogue pos="L" portrait="invi" text="Good luck!!!" dbox="happy"

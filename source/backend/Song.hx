@@ -38,6 +38,7 @@ typedef SwagSection =
 	var sectionBeats:Float;
 	var mustHitSection:Bool;
 	@:optional var altAnim:Bool;
+	@:optional var spamAnim:Bool;
 	@:optional var gfSection:Bool;
 	@:optional var bpm:Float;
 	@:optional var changeBPM:Bool;
@@ -149,8 +150,91 @@ class Song
 		if(FileSystem.exists(_lastPath))
 			rawData = File.getContent(_lastPath);
 		else
-		#end
+		{
+			// Check for Codename Engine chart format: songs/<name>/charts/<difficulty>.json
+			// Extract difficulty from jsonInput (e.g., "song-hard" -> "hard")
+			var diff:String = formattedSong;
+			var songName:String = formattedFolder;
+
+			// If jsonInput contains the song name + difficulty, split them
+			if(formattedSong.startsWith(formattedFolder + "-"))
+			{
+				songName = formattedFolder;
+				diff = formattedSong.substr(formattedFolder.length + 1);
+			}
+			else if(formattedFolder != formattedSong)
+			{
+				songName = formattedFolder;
+				diff = formattedSong;
+			}
+
+			// Try Codename format: songs/<name>/charts/<difficulty>.json
+			var codenamePath:String = Paths.mods(Mods.currentModDirectory + '/songs/$songName/charts/$diff.json');
+			if(FileSystem.exists(codenamePath))
+			{
+				rawData = File.getContent(codenamePath);
+				_lastPath = codenamePath;
+			}
+			else
+			{
+				// Try global mods
+				for(mod in Mods.getGlobalMods())
+				{
+					var modCodenamePath:String = Paths.mods('$mod/songs/$songName/charts/$diff.json');
+					if(FileSystem.exists(modCodenamePath))
+					{
+						rawData = File.getContent(modCodenamePath);
+						_lastPath = modCodenamePath;
+						break;
+					}
+				}
+			}
+
+			// Also try with "normal" difficulty as default
+			if(rawData == null)
+			{
+				var normalPath:String = Paths.mods(Mods.currentModDirectory + '/songs/$songName/charts/normal.json');
+				if(FileSystem.exists(normalPath))
+				{
+					rawData = File.getContent(normalPath);
+					_lastPath = normalPath;
+				}
+			}
+
+			// Merge events from separate events.json if it exists (Codename format)
+			if(rawData != null)
+			{
+				var eventsPath:String = Paths.mods(Mods.currentModDirectory + '/songs/$songName/events.json');
+				if(FileSystem.exists(eventsPath))
+				{
+					try
+					{
+						var eventsData:String = File.getContent(eventsPath);
+						var eventsJson:Dynamic = haxe.Json.parse(eventsData);
+						var songJson:Dynamic = haxe.Json.parse(rawData);
+						if(Reflect.hasField(songJson, "song"))
+							songJson = Reflect.field(songJson, "song");
+						// Merge events
+						if(Reflect.hasField(eventsJson, "events"))
+						{
+							var existingEvents:Array<Dynamic> = Reflect.hasField(songJson, "events") ? Reflect.field(songJson, "events") : [];
+							var newEvents:Array<Dynamic> = Reflect.field(eventsJson, "events");
+							for(evt in newEvents)
+								existingEvents.push(evt);
+							Reflect.setField(songJson, "events", existingEvents);
+						}
+						rawData = haxe.Json.stringify(songJson);
+					}
+					catch(e:Dynamic)
+					{
+						trace('Error merging Codename events.json: $e');
+					}
+				}
+			}
+		}
+		#else
 			rawData = Assets.getText(_lastPath);
+		#end
 
 		return rawData != null ? parseJSON(rawData, jsonInput) : null;
 	}
@@ -181,6 +265,34 @@ class Song
 					}
 			}
 		}
+
+		// Check if this is a Codename Engine chart (no format field or different structure)
+		if(songJson.format == null || (!songJson.format.startsWith('psych') && !songJson.format.startsWith('codename')))
+		{
+			// Try to convert from Codename format
+			var converted:Dynamic = CodenameCompat.convertChartJson(rawData, nameForError);
+			if(converted != null)
+			{
+				trace('Converted Codename chart for $nameForError to Psych format');
+				songJson = cast converted;
+				songJson.format = 'psych_v1_convert';
+			}
+		}
+
+		// If notes are still null after conversion (e.g. strumLines format not handled by built-in convert), try Codename conversion
+		var notesArr:Array<Dynamic> = songJson.notes;
+		if(notesArr == null || notesArr.length == 0)
+		{
+			trace('Notes null/empty after initial conversion for $nameForError, trying Codename compat...');
+			var converted:Dynamic = CodenameCompat.convertChartJson(rawData, nameForError);
+			if(converted != null)
+			{
+				trace('Converted Codename chart for $nameForError to Psych format (fallback)');
+				songJson = cast converted;
+				songJson.format = 'psych_v1_convert';
+			}
+		}
+
 		return songJson;
 	}
 }

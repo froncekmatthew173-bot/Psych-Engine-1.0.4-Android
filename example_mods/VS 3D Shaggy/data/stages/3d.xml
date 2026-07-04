@@ -1,0 +1,10 @@
+<!DOCTYPE codename-engine-stage>
+<stage scrollspeed="1" zoom="0.6" name="3d">
+	<sprite x="-394.145427641604" antialiasing="false" y="165.10199396218" sprite="background" scale="10" name="sprite1"/>
+	<sprite x="-550.421356620148" antialiasing="false" y="-126.720779608946" sprite="pyramids" scale="4" name="sprite3"/>
+	<sprite x="-1310" antialiasing="false" y="561" sprite="hills" scale="2.5" name="bg"/>
+	<gf x="-850" y="-165.66"/>
+	<dad x="-1660" y="-550"/>
+	<bf x="-100" y="-33.67"/>
+	<combo/>
+</stage>
