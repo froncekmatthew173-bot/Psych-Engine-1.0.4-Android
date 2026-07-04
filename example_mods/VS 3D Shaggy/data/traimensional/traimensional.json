@@ -6741,65 +6741,15 @@
 			]
 		],
 		[
-			0,
-			[
-				["Set Key Count", "4", "false", "[4,false,true,0]"]
-			]
-		],
-		[
-			0,
-			[
-				["Hide Stuff", "", "", "[,]"],
-				["Change Note Skin", "regular", "false"]
-			]
-		],
-		[
-			0,
-			[
-				["Set Key Count", "4", "false", "[4,false,true,0]"]
-			]
-		],
-		[
-			0,
-			[
-				["Hide Stuff", "", "", "[,]"],
-				["Change Note Skin", "regular", "false"]
-			]
-		],
-		[
 			29381.4432989691,
 			[
 				["Change Scroll Speed", "1.09", "0.08"]
 			]
 		],
 		[
-			29381.4432989691,
-			[
-				["Scroll Speed Change", "2.4", "true,1,linear,In", "[true,2.4,1,linear,In,false]"]
-			]
-		],
-		[
-			29381.4432989691,
-			[
-				["Scroll Speed Change", "2.4", "true,1,linear,In", "[true,2.4,1,linear,In,false]"]
-			]
-		],
-		[
 			69278.3505154639,
 			[
 				["Change Scroll Speed", "0.45", "0"]
-			]
-		],
-		[
-			69278.3505154639,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
-			]
-		],
-		[
-			69278.3505154639,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
 			]
 		],
 		[
@@ -6809,33 +6759,9 @@
 			]
 		],
 		[
-			69355.6701030928,
-			[
-				["Scroll Speed Change", "2.2", "true,4,quad,Out", "[true,2.2,4,quad,Out,false]"]
-			]
-		],
-		[
-			69355.6701030928,
-			[
-				["Scroll Speed Change", "2.2", "true,4,quad,Out", "[true,2.2,4,quad,Out,false]"]
-			]
-		],
-		[
 			69742.2680412371,
 			[
 				["Change Scroll Speed", "0.45", "0"]
-			]
-		],
-		[
-			69742.2680412371,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
-			]
-		],
-		[
-			69742.2680412371,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
 			]
 		],
 		[
@@ -6845,33 +6771,9 @@
 			]
 		],
 		[
-			69819.587628866,
-			[
-				["Scroll Speed Change", "2.2", "true,4,quad,Out", "[true,2.2,4,quad,Out,false]"]
-			]
-		],
-		[
-			69819.587628866,
-			[
-				["Scroll Speed Change", "2.2", "true,4,quad,Out", "[true,2.2,4,quad,Out,false]"]
-			]
-		],
-		[
 			70206.1855670103,
 			[
 				["Change Scroll Speed", "0.45", "0"]
-			]
-		],
-		[
-			70206.1855670103,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
-			]
-		],
-		[
-			70206.1855670103,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
 			]
 		],
 		[
@@ -6881,51 +6783,15 @@
 			]
 		],
 		[
-			70515.4639175258,
-			[
-				["Scroll Speed Change", "3", "false,1,linear,In", "[false,3,1,linear,In,false]"]
-			]
-		],
-		[
-			70515.4639175258,
-			[
-				["Scroll Speed Change", "3", "false,1,linear,In", "[false,3,1,linear,In,false]"]
-			]
-		],
-		[
 			70592.7835051546,
 			[
 				["Change Scroll Speed", "1", "0.77"]
 			]
 		],
 		[
-			70592.7835051546,
-			[
-				["Scroll Speed Change", "2.2", "true,10,quad,Out", "[true,2.2,10,quad,Out,false]"]
-			]
-		],
-		[
-			70592.7835051546,
-			[
-				["Scroll Speed Change", "2.2", "true,10,quad,Out", "[true,2.2,10,quad,Out,false]"]
-			]
-		],
-		[
 			79175.2577319587,
 			[
 				["Change Scroll Speed", "0.45", "0"]
-			]
-		],
-		[
-			79175.2577319587,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
-			]
-		],
-		[
-			79175.2577319587,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
 			]
 		],
 		[
@@ -6935,33 +6801,9 @@
 			]
 		],
 		[
-			79252.5773195876,
-			[
-				["Scroll Speed Change", "2.2", "true,4,quad,Out", "[true,2.2,4,quad,Out,false]"]
-			]
-		],
-		[
-			79252.5773195876,
-			[
-				["Scroll Speed Change", "2.2", "true,4,quad,Out", "[true,2.2,4,quad,Out,false]"]
-			]
-		],
-		[
 			79639.175257732,
 			[
 				["Change Scroll Speed", "0.45", "0"]
-			]
-		],
-		[
-			79639.175257732,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
-			]
-		],
-		[
-			79639.175257732,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
 			]
 		],
 		[
@@ -6971,33 +6813,9 @@
 			]
 		],
 		[
-			79716.4948453608,
-			[
-				["Scroll Speed Change", "2.2", "true,4,quad,Out", "[true,2.2,4,quad,Out,false]"]
-			]
-		],
-		[
-			79716.4948453608,
-			[
-				["Scroll Speed Change", "2.2", "true,4,quad,Out", "[true,2.2,4,quad,Out,false]"]
-			]
-		],
-		[
 			80103.0927835052,
 			[
 				["Change Scroll Speed", "0.45", "0"]
-			]
-		],
-		[
-			80103.0927835052,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
-			]
-		],
-		[
-			80103.0927835052,
-			[
-				["Scroll Speed Change", "1", "false,0.25,linear,In", "[false,1,0.25,linear,In,false]"]
 			]
 		],
 		[
@@ -7007,33 +6825,9 @@
 			]
 		],
 		[
-			80412.3711340206,
-			[
-				["Scroll Speed Change", "3", "false,1,linear,In", "[false,3,1,linear,In,false]"]
-			]
-		],
-		[
-			80412.3711340206,
-			[
-				["Scroll Speed Change", "3", "false,1,linear,In", "[false,3,1,linear,In,false]"]
-			]
-		],
-		[
 			80489.6907216495,
 			[
 				["Change Scroll Speed", "1", "0.77"]
-			]
-		],
-		[
-			80489.6907216495,
-			[
-				["Scroll Speed Change", "2.2", "true,10,quad,Out", "[true,2.2,10,quad,Out,false]"]
-			]
-		],
-		[
-			80489.6907216495,
-			[
-				["Scroll Speed Change", "2.2", "true,10,quad,Out", "[true,2.2,10,quad,Out,false]"]
 			]
 		],
 		[
@@ -7043,33 +6837,9 @@
 			]
 		],
 		[
-			89072.1649484536,
-			[
-				["Scroll Speed Change", "1", "true,20,quad,InOut", "[true,1,20,quad,InOut,false]"]
-			]
-		],
-		[
-			89072.1649484536,
-			[
-				["Scroll Speed Change", "1", "true,20,quad,InOut", "[true,1,20,quad,InOut,false]"]
-			]
-		],
-		[
 			108788.659793814,
 			[
 				["Change Scroll Speed", "1", "0.77"]
-			]
-		],
-		[
-			108788.659793814,
-			[
-				["Scroll Speed Change", "2.2", "true,10,quad,Out", "[true,2.2,10,quad,Out,false]"]
-			]
-		],
-		[
-			108788.659793814,
-			[
-				["Scroll Speed Change", "2.2", "true,10,quad,Out", "[true,2.2,10,quad,Out,false]"]
 			]
 		],
 		[
@@ -7079,33 +6849,9 @@
 			]
 		],
 		[
-			108865.979381443,
-			[
-				["Set Key Count", "5", "false", "[5,false,true,0]"]
-			]
-		],
-		[
-			108865.979381443,
-			[
-				["Set Key Count", "5", "false", "[5,false,true,0]"]
-			]
-		],
-		[
 			118762.886597938,
 			[
 				["Change Scroll Speed", "1.36", "0.08"]
-			]
-		],
-		[
-			118762.886597938,
-			[
-				["Scroll Speed Change", "3", "true,1,quart,Out", "[true,3,1,quart,Out,false]"]
-			]
-		],
-		[
-			118762.886597938,
-			[
-				["Scroll Speed Change", "3", "true,1,quart,Out", "[true,3,1,quart,Out,false]"]
 			]
 		],
 		[
@@ -7115,33 +6861,9 @@
 			]
 		],
 		[
-			128659.793814433,
-			[
-				["Scroll Speed Change", "2.2", "true,10,bounce,Out", "[true,2.2,10,bounce,Out,false]"]
-			]
-		],
-		[
-			128659.793814433,
-			[
-				["Scroll Speed Change", "2.2", "true,10,bounce,Out", "[true,2.2,10,bounce,Out,false]"]
-			]
-		],
-		[
 			208453.608247423,
 			[
 				["Change Scroll Speed", "0.45", "0"]
-			]
-		],
-		[
-			208453.608247423,
-			[
-				["Scroll Speed Change", "1", "false,5,linear,Out", "[false,1,5,linear,Out,false]"]
-			]
-		],
-		[
-			208453.608247423,
-			[
-				["Scroll Speed Change", "1", "false,5,linear,Out", "[false,1,5,linear,Out,false]"]
 			]
 		],
 		[
@@ -7151,33 +6873,9 @@
 			]
 		],
 		[
-			210927.835051546,
-			[
-				["Set Key Count", "6", "false", "[6,false,true,0]"]
-			]
-		],
-		[
-			210927.835051546,
-			[
-				["Set Key Count", "6", "false", "[6,false,true,0]"]
-			]
-		],
-		[
 			211005.154639175,
 			[
 				["Change Scroll Speed", "2.27", "0"]
-			]
-		],
-		[
-			211005.154639175,
-			[
-				["Scroll Speed Change", "5", "false,5,linear,Out", "[false,5,5,linear,Out,false]"]
-			]
-		],
-		[
-			211005.154639175,
-			[
-				["Scroll Speed Change", "5", "false,5,linear,Out", "[false,5,5,linear,Out,false]"]
 			]
 		],
 		[
@@ -7187,75 +6885,15 @@
 			]
 		],
 		[
-			211546.391752577,
-			[
-				["Scroll Speed Change", "2.5", "true,5,linear,Out", "[true,2.5,5,linear,Out,false]"]
-			]
-		],
-		[
-			211546.391752577,
-			[
-				["Scroll Speed Change", "2.5", "true,5,linear,Out", "[true,2.5,5,linear,Out,false]"]
-			]
-		],
-		[
-			212203.608247423,
-			[
-				["BPM Change", "206", "", "[206,]"]
-			]
-		],
-		[
-			212203.608247423,
-			[
-				["BPM Change", "206", "", "[206,]"]
-			]
-		],
-		[
 			268016.715043539,
 			[
 				["Change Scroll Speed", "0.91", "0.38"]
 			]
 		],
 		[
-			268016.715043539,
-			[
-				["Scroll Speed Change", "2", "true,5,linear,Out", "[true,2,5,linear,Out,false]"]
-			]
-		],
-		[
-			268016.715043539,
-			[
-				["Scroll Speed Change", "2", "true,5,linear,Out", "[true,2,5,linear,Out,false]"]
-			]
-		],
-		[
-			268089.53057752,
-			[
-				["BPM Change", "194", "", "[194,]"]
-			]
-		],
-		[
-			268089.53057752,
-			[
-				["BPM Change", "194", "", "[194,]"]
-			]
-		],
-		[
 			287883.345010509,
 			[
 				["Change Scroll Speed", "0.45", "3.87"]
-			]
-		],
-		[
-			287883.345010509,
-			[
-				["Scroll Speed Change", "1", "true,50,linear,InOut", "[true,1,50,linear,InOut,false]"]
-			]
-		],
-		[
-			287883.345010509,
-			[
-				["Scroll Speed Change", "1", "true,50,linear,InOut", "[true,1,50,linear,InOut,false]"]
 			]
 		]
 	],
