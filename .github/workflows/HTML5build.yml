@@ -23,13 +23,8 @@ jobs:
       - name: Install haxelib dependencies
         run: |
           haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null --quiet
-          haxelib install flixel > /dev/null --quiet
-          haxelib install flixel-addons > /dev/null --quiet
-          haxelib install tjson > /dev/null --quiet
-          haxelib install hscript-iris > /dev/null --quiet
-          haxelib install flxanimate > /dev/null --quiet
           chmod +x ./setup/unix.sh
+          sh ./setup/unix.sh
 
       # 4. Build HTML5 target
       - name: Build HTML5
