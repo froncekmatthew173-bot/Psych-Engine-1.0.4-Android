@@ -1,0 +1,15 @@
+-cp source
+-main Main
+-js bin/app.js
+-lib flixel
+-lib flixel-addons
+-lib tjson
+-lib hscript-iris
+-lib flxanimate
+-D MODS_ALLOWED
+-D HSCRIPT_ALLOWED
+-D ACHIEVEMENTS_ALLOWED
+-D TRANSLATIONS_ALLOWED
+-D PSYCH_WATERMARKS
+--define html5
+-dce full
