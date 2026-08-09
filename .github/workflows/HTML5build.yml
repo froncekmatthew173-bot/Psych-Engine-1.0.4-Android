@@ -34,7 +34,7 @@ jobs:
       # 4. Build HTML5 target
       - name: Build HTML5
         run: |
-          haxe build-html5.hxml
+          haxelib run lime build html5
           # Example hxml:
           # -cp src
           # -main Main
