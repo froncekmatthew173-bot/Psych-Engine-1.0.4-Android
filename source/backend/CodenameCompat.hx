@@ -4,8 +4,10 @@ import haxe.Json;
 import haxe.xml.Access;
 
 #if MODS_ALLOWED
+#if !js
 import sys.FileSystem;
 import sys.io.File;
+#end
 #end
 
 /**
@@ -888,6 +890,7 @@ class CodenameCompat
     {
         var scripts:Array<String> = [];
         #if MODS_ALLOWED
+        #if !js
         var formatted:String = Paths.formatToSongPath(songName);
         var scriptsPath:String = Paths.mods(Mods.currentModDirectory + '/songs/$formatted/scripts/');
 
@@ -900,6 +903,7 @@ class CodenameCompat
             }
         }
         #end
+        #end
         return scripts;
     }
 
@@ -911,6 +915,7 @@ class CodenameCompat
     {
         var scripts:Array<String> = [];
         #if MODS_ALLOWED
+        #if !js
         var scriptsPath:String = Paths.mods(Mods.currentModDirectory + '/data/charts/');
 
         if (FileSystem.exists(scriptsPath))
@@ -921,6 +926,7 @@ class CodenameCompat
                     scripts.push(scriptsPath + file);
             }
         }
+        #end
         #end
         return scripts;
     }
