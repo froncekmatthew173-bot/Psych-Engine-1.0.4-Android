@@ -1,0 +1,47 @@
+name: Haxe HTML5 Build & Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install Haxe
+      - name: Install Haxe
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.3  # Change to your required version
+
+      # 3. Install dependencies
+      - name: Install haxelib dependencies
+        run: |
+          haxelib setup ~/haxelib
+          haxelib install hxcpp > /dev/null --quiet
+          chmod +x ./setup/unix.sh
+
+      # 4. Build HTML5 target
+      - name: Build HTML5
+        run: |
+          haxe build-html5.hxml
+          # Example hxml:
+          # -cp src
+          # -main Main
+          # -js bin/app.js
+          # --library haxeui-core
+          # --library haxeui-html5
+
+      # 5. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./bin
+          publish_branch: gh-pages
+          force_orphan: true
