@@ -1,7 +1,9 @@
 package states;
 
 import lime.app.Future;
+#if !js && !html5
 import sys.thread.FixedThreadPool;
+#end
 import haxe.Json;
 import lime.utils.Assets;
 import openfl.display.BitmapData;
@@ -19,8 +21,10 @@ import backend.Song;
 import backend.StageData;
 import objects.Character;
 
+#if !js && !html5
 import sys.thread.Thread;
 import sys.thread.Mutex;
+#end
 
 import objects.Note;
 import objects.NoteSplash;
@@ -39,8 +43,10 @@ class LoadingState extends MusicBeatState
 
 	static var originalBitmapKeys:Map<String, String> = [];
 	static var requestedBitmaps:Map<String, BitmapData> = [];
+	#if !js && !html5
 	static var mutex:Mutex;
 	static var threadPool:FixedThreadPool = null;
+	#end
 
 	function new(target:FlxState, stopMusic:Bool)
 	{
@@ -332,9 +338,13 @@ class LoadingState extends MusicBeatState
 		isIntrusive = false;
 
 		FlxTransitionableState.skipNextTransIn = true;
+		#if !js && !html5
 		if (threadPool != null) threadPool.shutdown(); // kill all workers safely
 		threadPool = null;
+		#end
+		#if !js && !html5
 		mutex = null;
+		#end
 	}
 
 	public static function checkLoaded():Bool
@@ -406,6 +416,7 @@ class LoadingState extends MusicBeatState
 	static var dontPreloadDefaultVoices:Bool = false;
 	static function _startPool()
 	{
+		#if !js && !html5
 		#if MULTITHREADED_LOADING
 		// Due to the Main thread and Discord thread, we decrease it by 2.
 		var threadCount:Int = Std.int(Math.max(1, CoolUtil.getCPUThreadsCount() - #if DISCORD_ALLOWED 2 #else 1 #end));
@@ -413,6 +424,7 @@ class LoadingState extends MusicBeatState
 		var threadCount:Int = 1;
 		#end
 		threadPool = new FixedThreadPool(threadCount);
+		#end
 	}
 
 	public static function prepareToSong()
@@ -579,18 +591,28 @@ class LoadingState extends MusicBeatState
 			if (player2 != player1)
 			{
 				threadsMax++;
+				#if !js && !html5
 				threadPool.run(() -> {
 					try { preloadCharacter(player2, prefixVocals); } catch (e:Dynamic) {}
 					completedThread();
 				});
+				#else
+				try { preloadCharacter(player2, prefixVocals); } catch (e:Dynamic) {}
+				completedThread();
+				#end
 			}
 			if (!stageData.hide_girlfriend && gfVersion != player2 && gfVersion != player1)
 			{
 				threadsMax++;
+				#if !js && !html5
 				threadPool.run(() -> {
 					try { preloadCharacter(gfVersion); } catch (e:Dynamic) {}
 					completedThread();
 				});
+				#else
+				try { preloadCharacter(gfVersion); } catch (e:Dynamic) {}
+				completedThread();
+				#end
 			}
 
 			if(threadsCompleted == threadsMax)
@@ -662,7 +684,9 @@ class LoadingState extends MusicBeatState
 
 	public static function startThreads()
 	{
+		#if !js && !html5
 		mutex = new Mutex();
+		#end
 		loadMax = imagesToPrepare.length + soundsToPrepare.length + musicToPrepare.length + songsToPrepare.length;
 		loaded = 0;
 
@@ -687,6 +711,7 @@ class LoadingState extends MusicBeatState
 		#if debug
 		var threadSchedule = Sys.time();
 		#end
+		#if !js && !html5
 		threadPool.run(() -> {
 			#if debug
 			var threadStart = Sys.time();
@@ -708,6 +733,20 @@ class LoadingState extends MusicBeatState
 			loaded++;
 			// mutex.release();
 		});
+		#else
+		try {
+			if (func() != null) {
+				#if debug
+				var diff = Sys.time();
+				trace('finished preloading $traceData in ${diff}s');
+				#end
+			} else trace('ERROR! fail on preloading $traceData ');
+		}
+		catch(e:Dynamic) {
+			trace('ERROR! fail on preloading $traceData: $e');
+		}
+		loaded++;
+		#end
 	}
 
 	private static function preloadCharacter(char:String, ?prefixVocals:String)
@@ -817,9 +856,13 @@ class LoadingState extends MusicBeatState
 			if (#if sys FileSystem.exists(file) || #end OpenFlAssets.exists(file, SOUND))
 			{
 				var sound:Sound = #if sys Sound.fromFile(file) #else OpenFlAssets.getSound(file, false) #end;
+				#if !js && !html5
 				mutex.acquire();
+				#end
 				Paths.currentTrackedSounds.set(file, sound);
+				#if !js && !html5
 				mutex.release();
+				#end
 			}
 			else if (beepOnNull)
 			{
@@ -828,9 +871,13 @@ class LoadingState extends MusicBeatState
 				return FlxAssets.getSound('flixel/sounds/beep');
 			}
 		}
+		#if !js && !html5
 		mutex.acquire();
+		#end
 		Paths.localTrackedAssets.push(file);
+		#if !js && !html5
 		mutex.release();
+		#end
 
 		return Paths.currentTrackedSounds.get(file);
 	}
@@ -854,10 +901,14 @@ class LoadingState extends MusicBeatState
 					var bitmap:BitmapData = OpenFlAssets.getBitmapData(file, false);
 					#end
 
+					#if !js && !html5
 					mutex.acquire();
+					#end
 					requestedBitmaps.set(file, bitmap);
 					originalBitmapKeys.set(file, requestKey);
+					#if !js && !html5
 					mutex.release();
+					#end
 					return bitmap;
 				}
 				else trace('no such image $key exists');
